@@ -10,6 +10,7 @@
 <br />特别亲切于工业自动化工程师、硬件工程师、物联网工程师、追求效率的PHP工程师的写法风格。
 <br />OHSCE开放源代码，在OHSCE授权协议框架下您可以免费使用！
 #快速入门
+<br />http://www.ohsce.com/index.php/page/qstar.html
 <br />一、检查环境是否支持OHSCE
 <br />系统：Windows / Linux / OSX
  <br />         建议:WINDOWSSERVER2008及以上 UbuntuServer14.04LTS及以上
@@ -85,3 +86,10 @@
 <br />
 <br />正式运行使用隐藏窗口模式。
 <br />不断完善中，感谢支持。
+#交流与捐助
+开发者QQ群：
+
+374756165（新2016-09）
+捐助:
+http://www.ohsce.com/index.php/company/
+
