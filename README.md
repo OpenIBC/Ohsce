@@ -1,6 +1,6 @@
 # OHSCE高可靠性的PHP通信框架.
 #Open HI-REL Signal Communication Engine
-PHP以太网（TCP/UDP/ICMP）、RS232、RS485通信，可广泛直接或桥接各种网络工程通信。
+<br />》PHP以太网（TCP/UDP/ICMP）、RS232、RS485通信，可广泛直接或桥接各种网络工程通信。
 特别合适于对可靠性要求较高、上位机与末端协同工作的场景。如物联网设备通信、智能化系统、工业与自动化系统、可靠网络服务器。
 可运行于Windows、Linux、OS X。对Windows提供了全项功能支持，与自动化生态亲和。
 不过分追求高性能，充分平衡了可靠性与高性能。
