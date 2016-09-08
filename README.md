@@ -57,6 +57,7 @@
 <br />Ohsce_socketsend($ohsceclient['socket'],'hello');  //发送数据
 <br />echo Ohsce_socketread($ohsceclient['socket'],1024)[1]; //收取回复数据
 <br />sleep(30);
+<br /><img src="http://www.ohsce.org/data/upload/201609/f_6a0f512daf19100c1ca24f040b5d53a0.gif"></img>
 <br />
 <br />3.2工作在工业自动化现场控制网络上
 <br />
@@ -72,7 +73,8 @@
 <br />Ohsce_eng_serial_read($hscecom,$data,null,true); // 读取串口数据 返回数据长度为未知 以16进制返回
 <br />echo $data; //输出数据
 <br />sleep(30);
-
+<br /><img src="http://www.ohsce.org/data/upload/201609/f_8f57eaa803acc6b137a5dcacf47a4995.gif"></img>
+<br />
 <br />3.3测试使用OHSCE的进程守护
 <br />我们先写一个无用的自杀进程
 <br /><?php
