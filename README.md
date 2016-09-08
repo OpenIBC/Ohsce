@@ -84,6 +84,7 @@
 <br />$ohsce_pcenter_pr_prun='\pexample.php';
 <br />$ohsce_pcenter_memmorykey=6901;//注意 不得与生成器冲突，否则请提前注册。
 <br />启动并守护这个进程
+<br /><img src="http://www.ohsce.org/data/upload/201609/f_fb79fdc57845fe95cfa6a6812a471483.gif"></img>
 <br />
 <br />正式运行使用隐藏窗口模式。
 <br />不断完善中，感谢支持。
