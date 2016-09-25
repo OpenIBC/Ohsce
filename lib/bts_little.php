@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.20_A
+OHSCE_V0.1.21_A
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -13,3 +13,17 @@ function bts_bas_valueref($arr){
         return $refs; 
 
     }
+function bts_bas_array2bin($arr){
+	$res="";
+	foreach($arr as $arrp){
+		$res .= hex2bin($arrp);
+	}
+	return $res;
+}
+function bts_bas_array2bind($arr){
+	$res="";
+	foreach($arr as $arrp){
+		$res .= decbin($arrp);
+	}
+	return $res;
+}

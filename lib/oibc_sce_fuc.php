@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.20_A
+OHSCE_V0.1.21_A
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -85,6 +85,8 @@ case "locfast":
 goto unix;
 case "ICMP":
 case "icmp":
+case "arp":
+case "ARP":
 	default:
 $protocol=getprotobyname($protocol);
 $type=SOCK_RAW;
@@ -504,6 +506,14 @@ function Ohsce_casepr($pr,&$re){
 		return $re;
 	}
 }
+function Ohsce_makearp($mymac="B8-97-5A-24-E3-69",$myip,$farip){
+	$mymac=bts_bas_array2bin(explode("-",$mymac));
+	$myip=bts_bas_array2bind(explode(".",$myip));
+	$farip=bts_bas_array2bind(explode(".",$farip));
+	$qqyd="\x00\x01";
+	$pack="\xff\xff\xff\xff\xff\xff".$mymac."\x08\x06\x00\x01\x08\x00\x06\x04".$qqyd.$mymac.$myip."\x00\x00\x00\x00\x00\x00".$farip;
+	return $pack;
+}
 function Ohsce_comparity($parity){
 	if(!in_array($parity,array("none","n","even","e","odd","o","mark","m","spave","s"))) return $parity;
 	$Ohsce_paa_w=array("n"=>'n',"e"=>'e',"o"=>'o',"m"=>'m',"s"=>'s',"none"=>'n',"even"=>'e',"odd"=>'o',"mark"=>'m',"spave"=>'s');
@@ -705,6 +715,9 @@ function Ohsce_comclose(&$oibc,$mode=0){
 	fclose($oibc);
 	break;
 	}
+}
+function ohsce_comflush(&$oibc){
+	return fflush($oibc);
 }
 function Ohsce_exec($exec,$mode=0){
 	switch($mode){

@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.20_A
+OHSCE_V0.1.21_A
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -265,6 +265,48 @@ function Ohsce_eng_socket_server_runtcp($Ohsce,$stop=null,$speed=0,$callstop=fal
 		    }
 		}
 	}
+	$i++;
+	if(($callstop!=false)or(substr($callstop,0,7)=="oibcmix")){
+		if(shmop_read($memo,0,0)){
+			goto stop;
+		}
+		if(substr($callstop,0,7)!="oibcmix"){
+			usleep($speed);
+			goto starloop;
+		}
+	}
+	usleep($speed);
+    }while(($stop==0)or($i<$stop));
+	stop:
+	$res['run']=false;
+	if(!isset($res['msg'])) $res['msg']='stop'.OIBC_VERSON;
+	return $res;
+	terror:
+	js:
+	$res['run']=false;
+	if(!isset($res['msg'])) $res['msg']='guest'.OIBC_VERSON;
+	return $res;
+}
+function Ohsce_eng_socket_server_runudp($Ohsce,$stop=null,$speed=1,$callstop=false){
+	if((is_null($stop))or($stop=="")){
+		$stop=0;
+	}
+	if(($callstop!=false)or(substr($callstop,0,7)=="oibcmix")){
+		$memo=shmop_open(dechex(substr($callstop,7,5)),"c",0644,100);
+	}
+	echo $Ohsce['socket'];
+	$oibc_clients_zv=array("ohscesocket"=>$Ohsce['socket']);
+	$i=0;
+	$speed=10*$speed;
+	starloop:
+	do{
+	$oibc_jg=Ohsce_socketrecvfrom($Ohsce['socket'],$buf,0,0,$from,$port);
+	if($oibc_jg[0]==false){
+		unset($oibc_jg);
+		//usleep(10);
+		goto starloop;
+	}
+	$oibc_runACB_res=call_user_func_array($Ohsce['callback'],bts_bas_valueref(array($Ohsce['socket'],$buf,$from,$port,$oibc_clients_zv)));
 	$i++;
 	if(($callstop!=false)or(substr($callstop,0,7)=="oibcmix")){
 		if(shmop_read($memo,0,0)){
