@@ -16,6 +16,10 @@ function bts_bas_valueref($arr){
 function bts_bas_array2bin($arr){
 	$res="";
 	foreach($arr as $arrp){
+		$nhex=dechex(intval($arrp));
+		if(strlen($nhex)<2){
+			$nhex='0'.$nhex;
+		}
 		$res .= hex2bin($arrp);
 	}
 	return $res;
@@ -23,7 +27,11 @@ function bts_bas_array2bin($arr){
 function bts_bas_array2bind($arr){
 	$res="";
 	foreach($arr as $arrp){
-		$res .= decbin($arrp);
+		$nhex=dechex(intval($arrp));
+		if(strlen($nhex)<2){
+			$nhex='0'.$nhex;
+		}
+		$res .= hex2bin($nhex);
 	}
 	return $res;
 }
