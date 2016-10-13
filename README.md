@@ -76,6 +76,7 @@
 <br /><img src="http://www.ohsce.org/data/upload/201609/f_8f57eaa803acc6b137a5dcacf47a4995.gif"></img>
 <br />
 <br />3.2.2串口服务器
+<br /><img src="http://www.ohsce.org/www/img/COMSERVER.gif"></img>
 <br />3.3测试使用OHSCE的进程守护
 <br />我们先写一个无用的自杀进程
 <br /><?php
