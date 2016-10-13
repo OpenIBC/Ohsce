@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.21_A
+OHSCE_V0.1.22_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -19,6 +19,10 @@ switch($mode){
 		goto pdefend;
 	case "comrw":
 		goto comrw;
+	case "callnp":
+		goto callnp;
+	case "comserver":
+		goto comserver;
 	default:
 		$errmsg='Mode not definded!';
 		goto terror;
@@ -87,13 +91,52 @@ if(false==ohsce_smCreat($ohsce_olmd_out3,$ohsce_olmd_id_out3,"n")){
 	goto terror;
 }
 
-if(!ohsce_channel_server_creat($ohsce_olmd_channe,array('mode'=>'fastsocket','cport'=>intval(OHSCE_OLMD_MADDRESSPORT),'cip'=>'127.0.0.1'))){
+if(!ohsce_channel_server_creat($ohsce_olmd_channe,array('mode'=>'fastsocket','cport'=>intval(OHSCE_OLMD_MADDRESSPORT),'cip'=>OHSCE_MYIP_SYSTEM))){
 	$errmsg='Channel creat error!';
 	goto terror;
 }
+Ohsce_eng_socket_server($ohsceolmdudpserver,'udp',OHSCE_OLMD_MADDRESSPORTY,OHSCE_MYIP,'none');
 $ohsce_olmd_mhold[OHSCE_OLMD_MADDRESS]=$ohsce_olmd_main;
+$ohsce_olmd_mhold_canwritey['OLMDZAMB']='2';
+Ohsce_socketsetbuff($ohsceolmdudpserver['socket'],0,0,"MAX");
 olmdnext:
 olmdstarloop:
+    $ohsce_olmd_serverudp_ls=@Ohsce_socketrecvfrom($ohsceolmdudpserver['socket'],$ohsce_olmd_lsu_buf,0,0,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+	if($ohsce_olmd_serverudp_ls[0]!=false){
+		$ohsce_olmd_channe_date_b=ohsce_mcrypt($ohsce_olmd_lsu_buf,OHSCE_OLMD_MADDRESSPASSY,"d");
+		$ohsce_olmd_cread_data_b=ohsce_smDecode($ohsce_olmd_channe_date_b);
+		$ohsce_olmd_lsu_k=intval($ohsce_olmd_cread_data_b['key']);
+		if(isset($ohsce_olmd_cread_data_b['do'])){
+			$ohsce_olmd_lsu_do=strtolower(trim($ohsce_olmd_cread_data_b['do']));
+		}else{
+			$ohsce_olmd_lsu_do='read';
+		}
+		switch($ohsce_olmd_lsu_do){
+			case "read":
+		    if(isset($ohsce_olmd_mhold[$ohsce_olmd_lsu_k])){
+			if(false!=ohsce_smRead($ohsce_olmd_mhold[$ohsce_olmd_lsu_k],$ohsce_olmd_reslu_k_read)){
+			Ohsce_socketsend($ohsceolmdudpserver['socket'],$ohsce_olmd_reslu_k_read,0,0,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+			unset($ohsce_olmd_reslu_k_read);
+			}
+			}
+			break;
+			case "write":
+				if(isset($ohsce_olmd_mhold_canwritey[$ohsce_olmd_lsu_k],$ohsce_olmd_cread_data_b['data'])){
+				if($ohsce_olmd_mhold_canwritey[$ohsce_olmd_lsu_k]=="1"){
+					ohsce_smWrite($ohsce_olmd_mhold[$ohsce_olmd_lsu_k],$ohsce_olmd_cread_data_b['data']);
+					Ohsce_socketsend($ohsceolmdudpserver['socket'],'success',0,0,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+					break;
+				}
+			    }
+				Ohsce_socketsend($ohsceolmdudpserver['socket'],'Forbidden!',0,0,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+			break;
+			default:
+				Ohsce_socketsend($ohsceolmdudpserver['socket'],'Forbidden!',0,0,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+			break;
+		}
+			unset($ohsce_olmd_lsu_buf,$ohsce_olmd_lsu_from,$ohsce_olmd_lsu_port);
+	}
+
 	if(false!=ohsce_channel_read($ohsce_olmd_channe,$ohsce_olmd_channe_date,$ohsce_olmd_channe_from,$ohsce_olmd_channe_port)){
 		$ohsce_olmd_channe_date=ohsce_mcrypt($ohsce_olmd_channe_date,OHSCE_OLMD_MADDRESSPASS,"d");
 		$ohsce_olmd_cnew_data=ohsce_smDecode($ohsce_olmd_channe_date);
@@ -116,11 +159,17 @@ olmdstarloop:
 					ohsce_reChannel($ohsce_olmd_channe,$ohsce_olmd_channe_rdate,$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);
 					usleep(100);
 					unset($ohsce_olmd_cnew_k_read);
+					unset($ohsce_olmd_channe_rdate['msg']);
 				    goto olmdnext;
 				}
 			}
 			ohsce_smCreat($ohsce_olmd_cnew_a,$ohsce_olmd_cnew_k);
 			$ohsce_olmd_mhold[$ohsce_olmd_cnew_k]=$ohsce_olmd_cnew_a;
+			if(isset($ohsce_olmd_cnew_data['canwritey'])){
+				if($ohsce_olmd_cnew_data['canwritey']==1){
+					$ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_k]=1;
+				}
+			}
 			echo $ohsce_olmd_cnew_k;
 			$ohsce_olmd_channe_rdate['res']=true;
 			$ohsce_olmd_channe_rdate['key']=$ohsce_olmd_cnew_k;
@@ -139,9 +188,35 @@ olmdstarloop:
 			$ohsce_olmd_cnew_da=$ohsce_olmd_mhold[$ohsce_olmd_cnew_dk];
 			echo $ohsce_olmd_cnew_dk;
 			ohsce_smClose($ohsce_olmd_cnew_da);
+			unset($ohsce_olmd_mhold[$ohsce_olmd_cnew_dk]);
+			if(isset($ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_dk])){
+				unset($ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_dk]);
+			}
 			$ohsce_olmd_channe_rdate['res']=true;
 			$ohsce_olmd_channe_rdate['key']=$ohsce_olmd_cnew_dk;
 			ohsce_reChannel($ohsce_olmd_channe,$ohsce_olmd_channe_rdate,$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);
+		}elseif($ohsce_olmd_cnew_ad=="write"){
+			if(isset($ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_data['key']],$ohsce_olmd_cnew_data['data'])){
+				if($ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_data['key']]=="1"){
+					ohsce_smWrite($ohsce_olmd_mhold[$ohsce_olmd_cnew_data['key']],$ohsce_olmd_cnew_data['data']);
+					ohsce_reChannel($ohsce_olmd_channe,'success',$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);
+				}else{
+					goto olmdwft;
+				}
+			    }else{
+				olmdwft:
+				ohsce_reChannel($ohsce_olmd_channe,'faild',$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);
+				}
+		}elseif($ohsce_olmd_cnew_ad=="read"){
+			if(isset($ohsce_olmd_mhold[$ohsce_olmd_cnew_data['key']])){
+					$ohsce_olmd_channe_rdate['res']=true;
+					$ohsce_olmd_channe_rdate['data']=ohsce_smRead($ohsce_olmd_mhold[$ohsce_olmd_cnew_data['key']],$ohsce_olmd_readdata);
+			    }else{
+					$ohsce_olmd_channe_rdate['res']=false;
+				}
+			    $ohsce_olmd_channe_rdate['key']=$ohsce_olmd_cnew_data['key'];
+				ohsce_reChannel($ohsce_olmd_channe,$ohsce_olmd_channe_rdate,$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);
+				unset($ohsce_olmd_readdata);
 		}else{
 			usleep(100);
 			goto olmdnext;
@@ -319,6 +394,10 @@ foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => $ohsce_pcenter_wi
 				if(isset($ohsce_pcenter_runlx[$ohsce_pcenter_willrun_id])){
 				unset($ohsce_pcenter_runlx[$ohsce_pcenter_willrun_id]);
 				}
+				if(isset($ohsce_pcenter_willrun[$ohsce_pcenter_willrun_id])){
+				unset($ohsce_pcenter_willrun[$ohsce_pcenter_willrun_id]);
+				}
+				echo 'System has removed ohsce_pcpid:#'.$ohsce_pcenter_willrun_id.' Please try again'.PHP_EOL;
 			}
 		}
 		unset($ohsce_pcenter_callrm_w);
@@ -420,6 +499,54 @@ if($ohsce_comrw_buf==""){
 	}
 }
 goto comrwstarloop;
+goto terror;
+callnp:
+$oibc_cnp_csa=getopt('r:m:p:f:');
+$ohsce_cnp_np=$oibc_cnp_csa['p'];
+if((base64_decode($ohsce_cnp_np)!=false)and(base64_decode($ohsce_cnp_np)!="")and(base64_decode($ohsce_cnp_np)!=null)){
+	$ohsce_cnp_np=base64_decode($ohsce_cnp_np);
+}
+$ohsce_cnp_system_np=$OHSCE_pdefendC_vbs.' '.$ohsce_cnp_np;
+if($oibc_cnp_csa['f']=="system"){
+system($ohsce_cnp_system_np);
+}else{
+popen($ohsce_cnp_system_np,'r');
+}
+sleep(30);
+goto terror;
+comserver:
+$oibc_cnp_csa=getopt('r:m:p:c:');
+Ohsce_eng_serial_creat($hscecom,trim($oibc_cnp_csa['c'])); 
+Ohsce_eng_serial_open($hscecom);
+function comserveraccept(&$socket,$ip,$port,$zv){ 
+	global $hscecom;
+	$ohsce_cs_data=Ohsce_socketread($socket,1024);
+	if(($ohsce_cs_data!=null)or($ohsce_cs_data[0]!=false)){
+	Ohsce_eng_serial_write($hscecom,$ohsce_cs_data[1],false);
+    Ohsce_eng_serial_read($hscecom,$data,null,true);
+	Ohsce_socketwrite($socket,$data);
+	}
+	return true;
+}
+function comservera(&$socket,$buf,$len,$zv){  
+    global $hscecom;
+	Ohsce_eng_serial_write($hscecom,$buf,false);
+    Ohsce_eng_serial_read($hscecom,$data,null,true);
+	Ohsce_socketwrite($socket,$data);
+	return true;
+}
+function comserveralways(&$oibc_clients_zv){
+	global $hscecom;
+	Ohsce_eng_serial_read($hscecom,$data,null,true);
+	if((!is_null($data))and(strlen($data)>0)){
+		foreach($oibc_clients_zv['clients'] as $okey => $osclient){
+			Ohsce_socketwrite($osclient,$data);
+		}
+	}
+	return true;
+}
+Ohsce_eng_socket_server($ohsceserver,'tcp',intval(trim($oibc_cnp_csa['p'])),OHSCE_MYIP_SYSTEM,array('callback'=>'comservera','accept'=>'comserveraccept','fap'=>'comserveralways'),'comserveraccept');
+Ohsce_eng_socket_server_runtcp($ohsceserver); //开始运行
 goto terror;
 terror:
 exit($errmsg);

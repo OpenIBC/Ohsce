@@ -1,5 +1,5 @@
 # OHSCE高可靠性的PHP通信框架.
-<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.21 2016-09-25
+<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.22 2016-10-14
 #Open HI-REL Signal Communication Engine
 <br />PHP以太网（TCP/UDP/ICMP）、RS232、RS485通信，可广泛直接或桥接各种网络工程通信。
 <br />特别合适于对可靠性要求较高、上位机与末端协同工作的场景。如物联网设备通信、智能化系统、工业与自动化系统、可靠网络服务器。
@@ -75,6 +75,7 @@
 <br />sleep(30);
 <br /><img src="http://www.ohsce.org/data/upload/201609/f_8f57eaa803acc6b137a5dcacf47a4995.gif"></img>
 <br />
+<br />3.2.2串口服务器
 <br />3.3测试使用OHSCE的进程守护
 <br />我们先写一个无用的自杀进程
 <br /><?php

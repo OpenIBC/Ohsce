@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.21_A
+OHSCE_V0.1.22_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -279,6 +279,17 @@ function Ohsce_socketsend(&$socket,$in,$inl=0,$flags=0,$address=0,$port=0,$fast=
 	if(0!=$flags){
 		Ohsce_getflags($flags);
 	}
+	if(is_array($in)){
+		if(!isset($in['in'])){
+			goto terror;
+		}else{
+			if(isset($in['bin'])){
+				$in=hex2bin($in['in']);
+			}else{
+				$in=$in['in'];
+			}
+		}
+	}
 	if(($address!=0)and($port!=0)){
 		if(0!=$inl){
 			$inl=intval($inl);
@@ -337,6 +348,10 @@ function Ohsce_socketsend(&$socket,$in,$inl=0,$flags=0,$address=0,$port=0,$fast=
 		$res[0] = true;
 	    $res[1] = 'OpenIBCSCESuccess';
 		$res[2] = $bytes;
+	return $res;
+	terror:
+		$res[0] = false;
+	    $res[1] = 'OpenIBCSCEFaild';
 	return $res;
 }
 function Ohsce_socketwrite(&$socket,$in,$inl=0,$fast=false){
@@ -505,6 +520,245 @@ function Ohsce_casepr($pr,&$re){
 			$re=0;
 		return $re;
 	}
+}
+function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$short=true){
+	if(is_array($surl)){
+		if(isset($surl['postdata'])){
+		$postdata=$surl['postdata'];
+		}
+		if(isset($surl['proxy'])){
+		$proxy=$surl['proxy'];
+		$proxyaddress=$surl['proxyaddress'];
+		if(isset($surl['proxyuser'],$surl['proxypassword'])){
+			$proxyuser=$surl['proxyuser'];
+			$proxypassword=$surl['proxypassword'];
+		}else{
+			$proxyuser=null;
+			$proxypassword=null;
+		}
+		}
+		$url=$surl[0];
+	}else{
+		$url=$surl;
+	}
+	$cp=Ohsce_url_cp($url);
+	if($cp!=false){
+		Ohsce_url_seturl($url,$ohscecurl);
+		switch(strtolower($cp[1])){
+			case "ftp":
+				if(!isset($surl["files"],$surl["ud"])){
+				$cp[1]='error';
+				goto ejs;
+			    }
+				$ohffile=$surl["files"];
+			    $ohfud=$surl["ud"];
+				$ohffp = fopen($ohffile, 'r+');
+				if(($ohfud==true)or($ohfud=="upload")){
+				Ohsce_url_setftp($ohscecurl,$username,$password,true,$ohffp,$ohffile,300);
+				}else{
+				Ohsce_url_setftp($ohscecurl,$username,$password,false,$ohffp,$ohffile,300);
+				}
+				break;
+			case "https":
+				Ohsce_url_setmode($ohscecurl,"httpsn");
+				break;
+			case "http":
+			default:
+				Ohsce_url_setmode($ohscecurl);
+				break;
+		}
+	}else{
+		goto ejs;
+	}
+	if(isset($postdata)){
+		if(is_array($postdata)){
+		Ohsce_url_setpost($ohscecur,$postdata);
+		}else{
+		Ohsce_url_setjson($ohscecur,$postdata);
+		}
+	}
+	if($cookie!=false){
+		if($cookie=true){
+			$cookie='cookie.txt';
+		}else{
+			$cookie=trim($cookie);
+		}
+		$cookiedir = OHSCE_ROOTDIR.$cookie;
+		$ocfp=@fopen($cookiedir,"a+");
+		if($ocfp==false){
+			goto ejs;
+		}else{
+			fclose($ocfp);
+		}
+		Ohsce_url_setcookie($ohscecur,$cookiedir);
+	}
+	if((!is_null($username))and(!is_null($password))){
+		curl_setopt($ohscecurl, CURLOPT_USERPWD, $username.':'.$password);
+	}
+	if(isset($proxy,$proxyaddress)){
+		Ohsce_url_setproxy($ohscecurl,$proxy,$proxyaddressr,$proxyuser,$proxypassword);
+	}
+	curl_setopt($ohscecurl,CURLOPT_USERAGENT,'OpenHIRELSignalCommunicationEngine(MAIN)'.OIBC_VERSON); 
+	$odata=Ohsce_url_exec($ohscecurl);
+	if($short){
+	Ohsce_url_close($ohscecurl);
+	}
+	$odata=trim($odata);
+	if(strtolower($cp[1])=="ftp"){
+		fclose($ohffp);
+	}
+	    return $odata;
+	ejs:
+	if(strtolower($cp[1])=="ftp"){
+		fclose($ohffp);
+    }
+		return false;
+}
+function Ohsce_url_cp($url,$qz=true){
+	$urlheadar=explode(':',$url);
+    if(!isset($urlheadar[1])){
+	    if($qz){
+	      $url='http://'.$url;
+          $urlhead='http';
+	    }else{
+		  return false;
+	    }
+    }else{
+	$urlhead=$urlheadar[0];
+    }
+    switch(strtolower($urlhead)){
+	case 'http':
+		$res='http';
+	break;
+	case 'https':
+		$res='https';
+	break;
+	case 'ftp':
+		$res='ftp';
+	    $port=21;
+	break;
+	case 'gopher':
+		$res='gopher';
+	break;
+	case 'telnet':
+		$res='telnet';
+	break;
+	case 'dict':
+		$res='dict';
+	    $port=2628;
+	break;
+	case 'file':
+		$res='file';
+	break;
+	case 'ldap':
+		$res='ldap';
+	break;
+	default:
+		$res='http';
+	    $url='http://'.$url;
+	break;
+    }
+	$result[0]=$res;
+	$result[1]=$url;
+	if(isset($port)){
+	$result[2]=$port;
+	}
+	return $result;
+}
+function Ohsce_url_seturl($url,&$curl=null){
+	$curl = curl_init();
+    // 设置你需要抓取的URL
+    curl_setopt($curl, CURLOPT_URL, $url);
+	return $curl;
+}
+function Ohsce_url_setmode(&$curl,$mode="nomal",$timeout=5){
+	switch($mode){
+		case "httpsn":
+			curl_setopt($curl, CURLOPT_HEADER, 0);
+		    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        break;
+		case "nomal":
+		default:
+			curl_setopt($curl, CURLOPT_HEADER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);//通常情况下工控场景动作请求不指望完全返回
+		break;
+	}
+	return $curl;
+}
+function Ohsce_url_setpost(&$cr,$data){
+	curl_setopt($cr, CURLOPT_POST, 1);
+	curl_setopt($cr, CURLOPT_POSTFIELDS , http_build_query($data));
+	return $cr;
+}
+function Ohsce_url_setjson(&$cr,$data){
+	curl_setopt($cr, CURLOPT_POST, 1);
+	curl_setopt($cr, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length:' . strlen($data)));
+	curl_setopt($cr, CURLOPT_POSTFIELDS , $data);
+	return $cr;
+}
+function Ohsce_url_setcookie(&$cr,$data){
+	curl_setopt($cr, CURLOPT_COOKIEJAR, $data);
+	curl_setopt($cr, CURLOPT_COOKIEFILE , $data);
+	return $cr;
+}
+function Ohsce_url_setproxy(&$cr,$proxy,$proxyaddressr,$proxyuser=null,$proxypassword=null){
+	switch(strtolower($proxy)){
+		case "http":
+			curl_setopt($cr, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);  
+            curl_setopt($cr, CURLOPT_PROXY, $proxyaddressr);  
+			curl_setopt($cr, CURLOPT_HTTPPROXYTUNNEL, 1);
+			break;
+		case "socks4":
+			curl_setopt($cr, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);  
+            curl_setopt($cr, CURLOPT_PROXY, $proxyaddressr);  
+			break;
+		case "socks4a":
+			curl_setopt($cr, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4A);  
+            curl_setopt($cr, CURLOPT_PROXY, $proxyaddressr);  
+			break;
+		case "socks5":
+			curl_setopt($cr, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);  
+            curl_setopt($cr, CURLOPT_PROXY, $proxyaddressr);  
+			break;
+		case "socks5_hostname":
+			curl_setopt($cr, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);  
+            curl_setopt($cr, CURLOPT_PROXY, $proxyaddressr);  
+			break;
+		default:
+			return false;
+		    break;
+	}
+	if((!is_null($proxyuser))and(!is_null($proxypassword))){
+		curl_setopt($cr,CURLOPT_PROXYUSERPWD, $proxyuser.":".$proxypassword);  
+	}
+	return $cr;
+}
+function Ohsce_url_setftp(&$cr,$username,$password,$upload=true,&$fp,$localfile,$timeout=300){
+	curl_setopt($cr, CURLOPT_USERPWD, $username.':'.$password);
+	if($upload){
+		curl_setopt($cr, CURLOPT_UPLOAD, 1);
+        curl_setopt($cr, CURLOPT_INFILE, $fp);
+        curl_setopt($cr, CURLOPT_INFILESIZE, filesize($localfile));
+	}else{
+		curl_setopt($cr, CURLOPT_URL,$target_ftp_file);
+        curl_setopt($cr, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($cr, CURLOPT_VERBOSE, 1);
+        curl_setopt($cr, CURLOPT_FTP_USE_EPSV, 0);
+        curl_setopt($cr, CURLOPT_TIMEOUT, $timeout);
+		curl_setopt($cr, CURLOPT_FILE, $fp);
+	}
+	return $ct;
+}
+function Ohsce_url_exec(&$cr){
+	return curl_exec($cr);
+}
+function Ohsce_url_close(&$cr){
+	curl_close($cr);
+	return true;
 }
 function Ohsce_makearp($mymac="B8-97-5A-24-E3-69",$myip,$farip){
 	$mymac=bts_bas_array2bin(explode("-",$mymac));
@@ -755,6 +1009,9 @@ function ohsce_smCreat(&$mkey,$key,$flags="c",$mode=0644,$size=1014){
 	return shmop_read($mkey,0,0);
 }
 function ohsce_smDecode(&$smdate,$array=true){
+	if(is_array($smdate)){
+		return $smdate;
+	}
 	$smdate=unpack("a*",$smdate);
 	$smdate=json_decode($smdate[1],$array);
 	return $smdate;

@@ -1,10 +1,10 @@
 <?php
 /*
-OHSCE_V0.1.21_A
-¸ß¿É¿¿ÐÔµÄPHPÍ¨ÐÅ¿ò¼Ü¡£
+OHSCE_V0.1.22_B
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æž¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ð­ÒéÊ¹ÓÃ¡£
+@ä½œè€…:æž—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æŽˆæƒåè®®ä½¿ç”¨ã€‚
 */
 function Ohsce_eng_socket_client(&$res,$protocol,$port,$ip=null,$AF='ipv4',$sync=true,$mode='defalut'){
 	$protocol=strtoupper($protocol);
@@ -54,7 +54,21 @@ function Ohsce_eng_socket_client(&$res,$protocol,$port,$ip=null,$AF='ipv4',$sync
 		$res['connect']=false;
 	return $res;
 }
-function Ohsce_eng_socket_server(&$res,$protocol,$port,$ip=null,$callback,$callbackaccept=null,$AF='ipv4',$sync=true,$mode='defalut',$max=null){
+function Ohsce_eng_socket_server(&$res,$protocol,$port,$ip=null,$fuclist,$callbackaccept=null,$AF='ipv4',$sync=true,$mode='defalut',$max=null){
+	/*0.2.0ä¹‹åŽç§»é™¤callbackacceptè¾“å…¥*/
+	if(is_array($fuclist)){
+		$callback=$fuclist['callback'];
+		$callbackaccept=$fuclist['accept'];
+		if(isset($fuclist['fap'])){
+		$ohscefap=$fuclist['fap'];
+		}else{
+		$ohscefap=null;
+		}
+	}else{
+		$callback=$fuclist;
+		$ohscefap=null;
+	}
+	/*0.2.0ä¹‹åŽç§»é™¤callbackacceptè¾“å…¥*/
 	$protocol=strtoupper($protocol);
 	Ohsce_casepr($protocol,$res['read']);
 	$port=intval($port);
@@ -103,6 +117,7 @@ function Ohsce_eng_socket_server(&$res,$protocol,$port,$ip=null,$callback,$callb
 	$res['max']=$max;
 	$res['callback']=$callback;
 	$res['callbackaccept']=$callbackaccept;
+	$res['fap']=$ohscefap;
 	return $res;
 	terror:
 		$res['connect']=false;
@@ -179,6 +194,9 @@ function Ohsce_eng_socket_server_runtcp($Ohsce,$stop=null,$speed=0,$callstop=fal
 	$speed=10*$speed;
 	starloop:
 	do{
+	if(!is_null($Ohsce['fap'])){
+		$Ohsce['fap']($oibc_clients_zv);
+	}
 	$oibc_read=$oibc_clients;
 	$oibc_write=null;
 	$oibc_except=null;
@@ -300,6 +318,9 @@ function Ohsce_eng_socket_server_runudp($Ohsce,$stop=null,$speed=1,$callstop=fal
 	$speed=10*$speed;
 	starloop:
 	do{
+	if(!is_null($Ohsce['fap'])){
+		$Ohsce['fap']($oibc_clients_zv);
+	}
 	$oibc_jg=Ohsce_socketrecvfrom($Ohsce['socket'],$buf,0,0,$from,$port);
 	if($oibc_jg[0]==false){
 		unset($oibc_jg);
@@ -411,4 +432,136 @@ function Ohsce_eng_serial_close(&$oibc){
 	Ohsce_comclose($oibc['comr'],$oibc['mode']);
 	$oibc['open']=false;
 	$oibc['comr']=null;
+}
+function Ohsce_eng_olmd_cc(&$olmd,$port=0,$ip=0,$cport=0,$cip=0,$mode='fastsocket'){
+	if(($ip==0)or($ip==null)){
+		$ip=OHSCE_MYIP_SYSTEM;
+	}
+	if(($cip==0)or($cip==null)){
+		$cip=OHSCE_MYIP_SYSTEM;
+	}
+	if(($cport==0)or($cport==null)){
+		$cport=OHSCE_OLMD_MADDRESSPORT;
+	}
+	if(!ohsce_channel_client_creat($ohsce_olmd_channe,array('mode'=>$mode,'cport'=>$port,'cip'=>$ip))){
+	$olmd['res']=false;
+	return false;
+    }else{
+		$olmd['oc']=$ohsce_olmd_channe;
+		$olmd['res']=true;
+		$olmd['port']=$port;
+		$olmd['ip']=$ip;
+		$olmd['cport']=$cport;
+		$olmd['cip']=$cip;
+        return $olmd;
+	}
+}
+function Ohsce_eng_olmd_add($key,$canwrite=false,&$olmd=null,$cport=0,$cip=0){
+	if($olmd==null){
+		Ohsce_eng_olmd_cc($olmd);
+	}
+	if(($canwrite=="true")or($canwrite=="1")){
+		$data['canwritey']=1;
+	}
+	if(($cport==0)or($cport==null)){
+		$cport=$olmd['cport'];
+	}
+	if(($cip==0)or($cip==null)){
+		$cip=$olmd['cip'];
+	}
+	$data['ad']='add';
+	$data['key']=$key;
+	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
+    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
+	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
+	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
+	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
+		return false;
+	}
+    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
+	
+	if($ohsce_olmd_channe_read['res']=="1"){
+		return true;
+	}else{
+		return false;
+	}
+}
+function Ohsce_eng_olmd_del($key,&$olmd=null,$cport=0,$cip=0){
+	if($olmd==null){
+		Ohsce_eng_olmd_cc($olmd);
+	}
+	if(($cport==0)or($cport==null)){
+		$cport=$olmd['cport'];
+	}
+	if(($cip==0)or($cip==null)){
+		$cip=$olmd['cip'];
+	}
+	$data['ad']='del';
+	$data['key']=$key;
+	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
+    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
+	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
+	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
+	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
+		return false;
+	}
+    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
+	if($ohsce_olmd_channe_read['res']=="1"){
+		return true;
+	}else{
+		return false;
+	}
+}
+function Ohsce_eng_olmd_write($key,$value,&$olmd=null,$cport=0,$cip=0){
+	if($olmd==null){
+		Ohsce_eng_olmd_cc($olmd);
+	}
+	if(($cport==0)or($cport==null)){
+		$cport=$olmd['cport'];
+	}
+	if(($cip==0)or($cip==null)){
+		$cip=$olmd['cip'];
+	}
+	$data['ad']='write';
+	$data['key']=$key;
+	$data['data']=$value;
+	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
+    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
+	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
+	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
+	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
+		return false;
+	}
+    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
+	if($ohsce_olmd_channe_read['res']=="1"){
+		return true;
+	}else{
+		return false;
+	}
+}
+function Ohsce_eng_olmd_read($key,&$olmd=null,$cport=0,$cip=0){
+	if($olmd==null){
+		Ohsce_eng_olmd_cc($olmd);
+	}
+	if(($cport==0)or($cport==null)){
+		$cport=$olmd['cport'];
+	}
+	if(($cip==0)or($cip==null)){
+		$cip=$olmd['cip'];
+	}
+	$data['ad']='read';
+	$data['key']=$key;
+	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
+    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
+	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
+	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
+	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
+		return false;
+	}
+    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
+	if($ohsce_olmd_channe_read['res']=="1"){
+		return $ohsce_olmd_channe_read['data'];
+	}else{
+		return false;
+	}
 }
