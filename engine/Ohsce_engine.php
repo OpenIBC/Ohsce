@@ -1,10 +1,10 @@
 <?php
 /*
 OHSCE_V0.1.22_B
-¸ß¿É¿¿ĞÔµÄPHPÍ¨ĞÅ¿ò¼Ü¡£
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æ¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ğ­ÒéÊ¹ÓÃ¡£
+@ä½œè€…:æ—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æˆæƒåè®®ä½¿ç”¨ã€‚
 */
 reload:
 $errmsg='An error has been happened!';
@@ -432,9 +432,9 @@ if(($oibc_pdefend_pkey=="")or($oibc_pdefend_pkey==null)){
 $ohsce_pdefend_ml=trim(base64_decode($oibc_pdefend_pkey));
 echo $ohsce_pdefend_ml;
 $ohsce_pdefend_descriptorspec = array(
-   0 => array("pipe", "r"),  // ±ê×¼ÊäÈë£¬×Ó½ø³Ì´Ó´Ë¹ÜµÀÖĞ¶ÁÈ¡Êı¾İ
-   1 => array("pipe", "w"),  // ±ê×¼Êä³ö£¬×Ó½ø³ÌÏò´Ë¹ÜµÀÖĞĞ´ÈëÊı¾İ
-   //2 => array("file", "./log/pdefend_error-output.txt", "a") // ±ê×¼´íÎó£¬Ğ´Èëµ½Ò»¸öÎÄ¼ş
+   0 => array("pipe", "r"),  // æ ‡å‡†è¾“å…¥ï¼Œå­è¿›ç¨‹ä»æ­¤ç®¡é“ä¸­è¯»å–æ•°æ®
+   1 => array("pipe", "w"),  // æ ‡å‡†è¾“å‡ºï¼Œå­è¿›ç¨‹å‘æ­¤ç®¡é“ä¸­å†™å…¥æ•°æ®
+   //2 => array("file", "./log/pdefend_error-output.txt", "a") // æ ‡å‡†é”™è¯¯ï¼Œå†™å…¥åˆ°ä¸€ä¸ªæ–‡ä»¶
 );
 
 $ohsce_pdefend_cwd = NULL;
@@ -540,13 +540,16 @@ function comserveralways(&$oibc_clients_zv){
 	Ohsce_eng_serial_read($hscecom,$data,null,true);
 	if((!is_null($data))and(strlen($data)>0)){
 		foreach($oibc_clients_zv['clients'] as $okey => $osclient){
+			if($okey=="0"){
+				continue;
+			}
 			Ohsce_socketwrite($osclient,$data);
 		}
 	}
 	return true;
 }
 Ohsce_eng_socket_server($ohsceserver,'tcp',intval(trim($oibc_cnp_csa['p'])),OHSCE_MYIP_SYSTEM,array('callback'=>'comservera','accept'=>'comserveraccept','fap'=>'comserveralways'),'comserveraccept');
-Ohsce_eng_socket_server_runtcp($ohsceserver); //¿ªÊ¼ÔËĞĞ
+Ohsce_eng_socket_server_runtcp($ohsceserver); //å¼€å§‹è¿è¡Œ
 goto terror;
 terror:
 exit($errmsg);
