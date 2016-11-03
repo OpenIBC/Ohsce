@@ -1,10 +1,11 @@
 <?php
 /*
-OHSCE_V0.1.22_B
-∏ﬂø…øø–‘µƒPHPÕ®–≈øÚº‹°£
+OHSCE_V0.1.23_B
+È´òÂèØÈù†ÊÄßÁöÑPHPÈÄö‰ø°Ê°ÜÊû∂„ÄÇ
 HTTP://WWW.OHSCE.ORG
-@◊˜’ﬂ:¡÷”—’‹ 393562235@QQ.COM
-◊˜’ﬂ±£¡Ù»´≤ø»®¿˚£¨«Î“¿’’ ⁄»®–≠“È π”√°£
+@‰ΩúËÄÖ:ÊûóÂèãÂì≤ 393562235@QQ.COM
+‰ΩúËÄÖ‰øùÁïôÂÖ®ÈÉ®ÊùÉÂà©ÔºåËØ∑‰æùÁÖßÊéàÊùÉÂçèËÆÆ‰ΩøÁî®„ÄÇ
+ËØ•Êñá‰ª∂Á¶ÅÊ≠¢ÊîπÂêç!Âê¶ÂàôÂèØËÉΩ‰ºöÊó†Ê≥ïËøêË°åÔºÅ
 */
 reload:
 $errmsg='An error has been happened!';
@@ -23,6 +24,8 @@ switch($mode){
 		goto callnp;
 	case "comserver":
 		goto comserver;
+	case "wext":
+		goto wext;
 	default:
 		$errmsg='Mode not definded!';
 		goto terror;
@@ -432,9 +435,9 @@ if(($oibc_pdefend_pkey=="")or($oibc_pdefend_pkey==null)){
 $ohsce_pdefend_ml=trim(base64_decode($oibc_pdefend_pkey));
 echo $ohsce_pdefend_ml;
 $ohsce_pdefend_descriptorspec = array(
-   0 => array("pipe", "r"),  // ±Í◊º ‰»Î£¨◊”Ω¯≥Ã¥”¥Àπ‹µ¿÷–∂¡»° ˝æ›
-   1 => array("pipe", "w"),  // ±Í◊º ‰≥ˆ£¨◊”Ω¯≥ÃœÚ¥Àπ‹µ¿÷––¥»Î ˝æ›
-   //2 => array("file", "./log/pdefend_error-output.txt", "a") // ±Í◊º¥ÌŒÛ£¨–¥»ÎµΩ“ª∏ˆŒƒº˛
+   0 => array("pipe", "r"),  // Ê†áÂáÜËæìÂÖ•ÔºåÂ≠êËøõÁ®ã‰ªéÊ≠§ÁÆ°ÈÅì‰∏≠ËØªÂèñÊï∞ÊçÆ
+   1 => array("pipe", "w"),  // Ê†áÂáÜËæìÂá∫ÔºåÂ≠êËøõÁ®ãÂêëÊ≠§ÁÆ°ÈÅì‰∏≠ÂÜôÂÖ•Êï∞ÊçÆ
+   //2 => array("file", "./log/pdefend_error-output.txt", "a") // Ê†áÂáÜÈîôËØØÔºåÂÜôÂÖ•Âà∞‰∏Ä‰∏™Êñá‰ª∂
 );
 
 $ohsce_pdefend_cwd = NULL;
@@ -517,7 +520,7 @@ goto terror;
 comserver:
 $oibc_cnp_csa=getopt('r:m:p:c:');
 Ohsce_eng_serial_creat($hscecom,trim($oibc_cnp_csa['c'])); 
-Ohsce_eng_serial_open($hscecom);
+Ohsce_eng_serial_open($hscecom,false);
 function comserveraccept(&$socket,$ip,$port,$zv){ 
 	global $hscecom;
 	$ohsce_cs_data=Ohsce_socketread($socket,1024);
@@ -540,13 +543,25 @@ function comserveralways(&$oibc_clients_zv){
 	Ohsce_eng_serial_read($hscecom,$data,null,true);
 	if((!is_null($data))and(strlen($data)>0)){
 		foreach($oibc_clients_zv['clients'] as $okey => $osclient){
+			if($okey=="0"){
+				continue;
+			}
 			Ohsce_socketwrite($osclient,$data);
 		}
 	}
 	return true;
 }
 Ohsce_eng_socket_server($ohsceserver,'tcp',intval(trim($oibc_cnp_csa['p'])),OHSCE_MYIP_SYSTEM,array('callback'=>'comservera','accept'=>'comserveraccept','fap'=>'comserveralways'),'comserveraccept');
-Ohsce_eng_socket_server_runtcp($ohsceserver); //ø™ º‘À––
+Ohsce_eng_socket_server_runtcp($ohsceserver); //ÂºÄÂßãËøêË°å
+goto terror;
+wext:
+$oibc_wext_csa=getopt('r:m:n:e:');
+$oibc_wext_dir='../ext/'.trim($oibc_wext_csa['e'].'/ext.php';
+if(file_exists($oibc_wext_dir)){
+	include($oibc_wext_dir);
+}
+$mode=trim($oibc_wext_csa['n']);
+goto reload;
 goto terror;
 terror:
 exit($errmsg);

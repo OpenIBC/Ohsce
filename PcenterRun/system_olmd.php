@@ -1,10 +1,11 @@
 <?php
 /*
-OHSCE_V0.1.22_B
+OHSCE_V0.1.23_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
 作者保留全部权利，请依照授权协议使用。
+该文件禁止改名!否则可能会无法运行！
 */
 $ohsce_pcenter_pr_name='轻型内存中转库';
 $ohsce_pcenter_pr_prun='\OHSceRun.php -r engine -m olmd';

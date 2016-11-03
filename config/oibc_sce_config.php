@@ -1,10 +1,11 @@
 <?php
 /*
-OHSCE_V0.1.22_B
+OHSCE_V0.1.23_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
 作者保留全部权利，请依照授权协议使用。
+该文件禁止改名!否则可能会无法运行！
 */
 define('OHSCE_MYIP', '127.0.0.1');//本机IP地址
 define('OHSCE_MYIP_SYSTEM', '127.0.0.1');//本机IP地址（系统内）
@@ -20,3 +21,7 @@ $OHSCE_pdefend=OHSCE_ROOTDIR.'\OHSceRun.php -r engine -m pdefend -p';
 $OHSCE_pdefend_vbs=OHSCE_ROOTDIR.'\pdefend.vbs';
 $OHSCE_pdefendC_vbs=OHSCE_ROOTDIR.'\pdefendC.vbs';
 $OHSCE_pdefend_recalltime=5;//当二级守护进程死亡重新呼叫间隔，不要太小！
+//---------------WebApis
+$OHSCE_webapi="on";//on-开启  off-关闭 WEBAPI
+$OHSCE_webapi_safe="on";//on-开启验证Token off-不验证Token 
+$OHSCE_webapi_token="webapitoken";//Token种子，必须修改。

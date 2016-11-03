@@ -1,1 +1,1 @@
-D:\phpStudy\php54n\php.exe %cd%/OHSceRun.php -r engine -m pcenter
+php %cd%/OHSceRun.php -r engine -m pcenter

@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.22_B
+OHSCE_V0.1.23_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -172,6 +172,24 @@ function oibc_sce_socket_send(&$oibc_sce,$in,$len=null,$mode=null,$to=null,$port
 	terror:
 		return false;
 }
+function oibc_sce_socket_recv(&$oibc_sce,$in,$len=null,$mode='recv'){
+	switch($mode){
+	case "read":
+	$oibc_jg=Ohsce_socketread($oibc_read_socket,8219);
+	break;
+	case "recv":
+	default:
+	Ohsce_socketrecv($oibc_sce['socket'],$oibc_jg);
+	break;
+	}
+	if($oibc_jg==null){
+			$oibc_jg[0]=false;
+	}
+	if($oibc_jg[0]==false){
+		return false;
+	}
+	return $oibc_jg[1];
+}
 function Ohsce_eng_socket_server_runtcp($Ohsce,$stop=null,$speed=0,$callstop=false){
 	if((is_null($stop))or($stop=="")){
 		$stop=0;
@@ -251,7 +269,7 @@ function Ohsce_eng_socket_server_runtcp($Ohsce,$stop=null,$speed=0,$callstop=fal
 		$buf=null;
 		switch($Ohsce['read']){
 		case "1":
-		$oibc_jg=Ohsce_socketread($oibc_read_socket,1024);
+		$oibc_jg=Ohsce_socketread($oibc_read_socket,8219);
 		break;
 		case "0":
 		default:
@@ -371,8 +389,10 @@ function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity
 	$res['mode']=$mode;
 	return $res;
 }
-function Ohsce_eng_serial_open(&$oibc){
+function Ohsce_eng_serial_open(&$oibc,$set=true){
+	if($set!=false){
 	Ohsce_comset($oibc['com'],$oibc['baud'],$oibc['parity'],$oibc['data'],$oibc['stop'],$oibc['fc'],$oibc['xon'],$oibc['to'],$oibc['octs'],$oibc['odsr'],$oibc['idsr'],$oibc['dtr'],$oibc['rts']);
+	}
 	Ohsce_comopen($oibc['comr'],$oibc['com'],$oibc['flags'],$oibc['mode']);
 	if($oibc['comr']==false){
 	$oibc['open']=false;
@@ -432,136 +452,4 @@ function Ohsce_eng_serial_close(&$oibc){
 	Ohsce_comclose($oibc['comr'],$oibc['mode']);
 	$oibc['open']=false;
 	$oibc['comr']=null;
-}
-function Ohsce_eng_olmd_cc(&$olmd,$port=0,$ip=0,$cport=0,$cip=0,$mode='fastsocket'){
-	if(($ip==0)or($ip==null)){
-		$ip=OHSCE_MYIP_SYSTEM;
-	}
-	if(($cip==0)or($cip==null)){
-		$cip=OHSCE_MYIP_SYSTEM;
-	}
-	if(($cport==0)or($cport==null)){
-		$cport=OHSCE_OLMD_MADDRESSPORT;
-	}
-	if(!ohsce_channel_client_creat($ohsce_olmd_channe,array('mode'=>$mode,'cport'=>$port,'cip'=>$ip))){
-	$olmd['res']=false;
-	return false;
-    }else{
-		$olmd['oc']=$ohsce_olmd_channe;
-		$olmd['res']=true;
-		$olmd['port']=$port;
-		$olmd['ip']=$ip;
-		$olmd['cport']=$cport;
-		$olmd['cip']=$cip;
-        return $olmd;
-	}
-}
-function Ohsce_eng_olmd_add($key,$canwrite=false,&$olmd=null,$cport=0,$cip=0){
-	if($olmd==null){
-		Ohsce_eng_olmd_cc($olmd);
-	}
-	if(($canwrite=="true")or($canwrite=="1")){
-		$data['canwritey']=1;
-	}
-	if(($cport==0)or($cport==null)){
-		$cport=$olmd['cport'];
-	}
-	if(($cip==0)or($cip==null)){
-		$cip=$olmd['cip'];
-	}
-	$data['ad']='add';
-	$data['key']=$key;
-	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
-    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
-	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
-	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
-	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
-		return false;
-	}
-    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
-	
-	if($ohsce_olmd_channe_read['res']=="1"){
-		return true;
-	}else{
-		return false;
-	}
-}
-function Ohsce_eng_olmd_del($key,&$olmd=null,$cport=0,$cip=0){
-	if($olmd==null){
-		Ohsce_eng_olmd_cc($olmd);
-	}
-	if(($cport==0)or($cport==null)){
-		$cport=$olmd['cport'];
-	}
-	if(($cip==0)or($cip==null)){
-		$cip=$olmd['cip'];
-	}
-	$data['ad']='del';
-	$data['key']=$key;
-	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
-    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
-	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
-	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
-	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
-		return false;
-	}
-    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
-	if($ohsce_olmd_channe_read['res']=="1"){
-		return true;
-	}else{
-		return false;
-	}
-}
-function Ohsce_eng_olmd_write($key,$value,&$olmd=null,$cport=0,$cip=0){
-	if($olmd==null){
-		Ohsce_eng_olmd_cc($olmd);
-	}
-	if(($cport==0)or($cport==null)){
-		$cport=$olmd['cport'];
-	}
-	if(($cip==0)or($cip==null)){
-		$cip=$olmd['cip'];
-	}
-	$data['ad']='write';
-	$data['key']=$key;
-	$data['data']=$value;
-	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
-    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
-	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
-	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
-	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
-		return false;
-	}
-    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
-	if($ohsce_olmd_channe_read['res']=="1"){
-		return true;
-	}else{
-		return false;
-	}
-}
-function Ohsce_eng_olmd_read($key,&$olmd=null,$cport=0,$cip=0){
-	if($olmd==null){
-		Ohsce_eng_olmd_cc($olmd);
-	}
-	if(($cport==0)or($cport==null)){
-		$cport=$olmd['cport'];
-	}
-	if(($cip==0)or($cip==null)){
-		$cip=$olmd['cip'];
-	}
-	$data['ad']='read';
-	$data['key']=$key;
-	$ohsce_olmd_cnew_data=ohsce_smEncode($data);
-    $ohsce_olmd_cnew_data=ohsce_mcrypt($ohsce_olmd_cnew_data,OHSCE_OLMD_MADDRESSPASS,"e")["string"];
-	ohsce_channel_write($olmd['oc'],$ohsce_olmd_cnew_data,$cip,$cport);
-	ohsce_channel_read($olmd['oc'],$ohsce_olmd_channe_read);
-	if(($ohsce_olmd_channe_read==null)or($ohsce_olmd_channe_read==false)){
-		return false;
-	}
-    $ohsce_olmd_channe_read=ohsce_smDecode($ohsce_olmd_channe_read);
-	if($ohsce_olmd_channe_read['res']=="1"){
-		return $ohsce_olmd_channe_read['data'];
-	}else{
-		return false;
-	}
 }
