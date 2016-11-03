@@ -8,6 +8,9 @@ HTTP://WWW.OHSCE.ORG
 该文件禁止改名!否则可能会无法运行！
 */
 /* oibc_函数集 部分版 阉割版，必须手动指定准确参数. */
+function ohsce_maketoken($key,$token){
+	return md5(md5($key.sha1($token)));
+}
 function ohsce_mcrypt($string,$key="rand",$mode="e",$sf=MCRYPT_RIJNDAEL_128,$ms=MCRYPT_MODE_ECB){
 	if(empty($mode)){
 		$mode="e";

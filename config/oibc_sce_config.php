@@ -23,5 +23,5 @@ $OHSCE_pdefendC_vbs=OHSCE_ROOTDIR.'\pdefendC.vbs';
 $OHSCE_pdefend_recalltime=5;//当二级守护进程死亡重新呼叫间隔，不要太小！
 //---------------WebApis
 $OHSCE_webapi="on";//on-开启  off-关闭 WEBAPI
-$OHSCE_webapi_safe="on";//on-开启验证Token off-不验证Token 
+$OHSCE_webapi_safe="off";//on-开启验证Token off-不验证Token 
 $OHSCE_webapi_token="webapitoken";//Token种子，必须修改。

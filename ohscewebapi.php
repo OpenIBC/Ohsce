@@ -18,6 +18,17 @@ include('./OHSCE/loadohsce.php');
 }else{
 	exit('lodaohsce.php can not be found!-OHSCE '.OIBC_VERSON);
 }
+if($OHSCE_webapi!="on"){
+	exit('Ohscewebapi has been closed!');
+}
+if($OHSCE_webapi_safe=="on"){
+	if(!isset($_GET['token'],$_GET['key'])){
+		exit('Forbidden!-OHSCE '.OIBC_VERSON);
+	}
+	if(ohsce_maketoken(trim($_GET['key']),$OHSCE_webapi_token)!=trim($_GET['token'])){
+		exit('Forbidden!-OHSCE '.OIBC_VERSON);
+	}
+}
 if(isset($_GET['xndrive'])){
 	exit('This verson is not support XNDrive!');
 }
