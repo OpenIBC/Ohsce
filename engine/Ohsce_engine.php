@@ -1,18 +1,11 @@
 <?php
 /*
-<<<<<<< HEAD
-OHSCE_V0.1.23_B
-=======
 OHSCE_V0.1.22_B
->>>>>>> origin/master
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
 作者保留全部权利，请依照授权协议使用。
-<<<<<<< HEAD
 该文件禁止改名!否则可能会无法运行！
-=======
->>>>>>> origin/master
 */
 reload:
 $errmsg='An error has been happened!';
@@ -560,7 +553,6 @@ function comserveralways(&$oibc_clients_zv){
 }
 Ohsce_eng_socket_server($ohsceserver,'tcp',intval(trim($oibc_cnp_csa['p'])),OHSCE_MYIP_SYSTEM,array('callback'=>'comservera','accept'=>'comserveraccept','fap'=>'comserveralways'),'comserveraccept');
 Ohsce_eng_socket_server_runtcp($ohsceserver); //开始运行
-<<<<<<< HEAD
 goto terror;
 wext:
 $oibc_wext_csa=getopt('r:m:n:e:');
@@ -570,8 +562,6 @@ if(file_exists($oibc_wext_dir)){
 }
 $mode=trim($oibc_wext_csa['n']);
 goto reload;
-=======
->>>>>>> origin/master
 goto terror;
 terror:
 exit($errmsg);
