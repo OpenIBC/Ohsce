@@ -556,7 +556,7 @@ Ohsce_eng_socket_server_runtcp($ohsceserver); //开始运行
 goto terror;
 wext:
 $oibc_wext_csa=getopt('r:m:n:e:');
-$oibc_wext_dir='../ext/'.trim($oibc_wext_csa['e'].'/ext.php';
+$oibc_wext_dir='../ext/'.trim($oibc_wext_csa['e']).'/ext.php';
 if(file_exists($oibc_wext_dir)){
 	include($oibc_wext_dir);
 }
