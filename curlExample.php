@@ -10,16 +10,7 @@ ini_set('memory_limit',"88M");//重置php可以使用的内存大小为64M
 set_time_limit(0);
 ob_implicit_flush(1);
 include('loadohsce.php');
-//error_reporting(0);
-$ohsce_ml=getopt('r:m:');
-$mode=$ohsce_ml['m'];
-switch(strtolower($ohsce_ml['r'])){
-case "1":
-case "engine":
-case "ohsce_engine":
-include_once('./engine/Ohsce_engine.php');
-break;
-default:
-	include_once($ohsce_ml['r']);
-break;
-}
+error_reporting(1);
+Ohsce_url_c("http://www.baidu.com",$ohsceurldata);
+echo $ohsceurldata;
+

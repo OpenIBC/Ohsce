@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.23_B
+OHSCE_V0.1.24_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -14,12 +14,56 @@ function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 	if(empty($inaction)){
 		return 'Forbidden! -ohsce_wca_v0.0.1';
 	}
+	switch($inaction){
+		case "w":
+			$flags=2;
+			break;
+		default:
+			$flags=1;
+		break;
+	}
+	
 	if(!isset($_GET['com'])){
 		return 'Forbidden! Undefind Com!';
+	}else{
+		if(!file_exists(trim($_GET['com']))){
+			return 'Forbidden! Com can not be find!';
+		}
 	}
-	Ohsce_eng_serial_creat($hscecom,trim($_GET['com'])); 
+	$comfirst=false;
+	if(!isset($_GET['baud'])){
+		$gbaud=9600;
+	}else{
+		$gbaud=intval(trim($_GET['baud']));
+		$comfirst=true;
+	}
+	if(!isset($_GET['parity'])){
+		$gparity='n';
+	}else{
+		$gparity=trim($_GET['parity']);
+		$comfirst=true;
+	}
+	if(!isset($_GET['cdata'])){
+		$gdata=8;
+	}else{
+		$gdata=intval(trim($_GET['cdata']));
+		$comfirst=true;
+	}
+	if(!isset($_GET['cstop'])){
+		$gstop=1;
+	}else{
+		$gstop=intval(trim($_GET['cstop']));
+		$comfirst=true;
+	}
+	if(!isset($_GET['fc'])){
+		$gfc='none';
+	}else{
+		$gfc=trim($_GET['fc']);
+		$comfirst=true;
+	}
+	Ohsce_eng_serial_creat($hscecom,trim($_GET['com']),$flags,0,$baud=$gbaud,$parity=$gparity,$data=$gdata,$stop=$gstop,$gfc='none'); 
 	openagain:
-    if(!Ohsce_eng_serial_open($hscecom,false)['open']){
+    if(!Ohsce_eng_serial_open($hscecom,$comfirst)['open']){
 		if(!isset($tryopen)){
 			$tryopen=1;
 		}else{
@@ -42,6 +86,17 @@ function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 			}
 			Ohsce_eng_serial_write($hscecom,$comdata,true);
             Ohsce_eng_serial_read($hscecom,$redata,null,true);
+			goto freturn;
+		case "w":
+			if(!isset($_GET['comdata'])){
+			return 'Undefind Comdata!';
+		    }
+			$comdata=trim($_GET['comdata']);
+			if((strlen($comdata)%2)!=0){
+				$comdata='0'.$comdata;
+			}
+			Ohsce_eng_serial_write($hscecom,$comdata,true);
+            $redata=true;
 			goto freturn;
 		default:
 			return 'UnDefind Action!';

@@ -577,6 +577,8 @@ function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$
 	if(isset($postdata)){
 		if(is_array($postdata)){
 		Ohsce_url_setpost($ohscecur,$postdata);
+		}elseif(!bts_is_json($postdata)){
+		Ohsce_url_setstr($ohscecur,$postdata);
 		}else{
 		Ohsce_url_setjson($ohscecur,$postdata);
 		}
@@ -698,6 +700,11 @@ function Ohsce_url_setpost(&$cr,$data){
 	curl_setopt($cr, CURLOPT_POSTFIELDS , http_build_query($data));
 	return $cr;
 }
+function Ohsce_url_setstr(&$cr,$data){
+	curl_setopt($cr, CURLOPT_POST, 1);
+	curl_setopt($cr, CURLOPT_POSTFIELDS , $data);
+	return $cr;
+}
 function Ohsce_url_setjson(&$cr,$data){
 	curl_setopt($cr, CURLOPT_POST, 1);
 	curl_setopt($cr, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length:' . strlen($data)));
@@ -804,7 +811,11 @@ function Ohsce_comfc($fc){
 function Ohsce_comset($com,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on'){
 	switch(OHSCE_OS){
 	case "Windows":
-	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." to=".$to." octs=".$octs." idsr=".$idsr." dtr=".$dtr." res=".$rts;
+	if($fc=="none"){
+	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." to=".$to." octs=".$octs." idsr=".$idsr." dtr=".$dtr." rts=".$rts;
+	}else{
+	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." odsr=".$odsr." to=".$to." idsr=".$idsr." dtr=".$dtr." ".Ohsce_comfc($fc);
+	}
 	break;
 	case "Linux":
 		if($stop == 1.5) return false;

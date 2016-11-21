@@ -172,7 +172,7 @@ function oibc_sce_socket_send(&$oibc_sce,$in,$len=null,$mode=null,$to=null,$port
 	terror:
 		return false;
 }
-function oibc_sce_socket_recv(&$oibc_sce,$in,$len=null,$mode='recv'){
+function oibc_sce_socket_recv(&$oibc_sce,$in=null,$len=null,$mode='recv'){
 	switch($mode){
 	case "read":
 	$oibc_jg=Ohsce_socketread($oibc_read_socket,8219);
@@ -452,4 +452,7 @@ function Ohsce_eng_serial_close(&$oibc){
 	Ohsce_comclose($oibc['comr'],$oibc['mode']);
 	$oibc['open']=false;
 	$oibc['comr']=null;
+}
+function Ohsce_eng_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$short=true){
+return Ohsce_url_c($surl,$odata,$username=null,$password=null,$cookie=false,$short=true);
 }
