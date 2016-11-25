@@ -11,7 +11,7 @@ set_time_limit(0);
 ob_implicit_flush(1);
 error_reporting(0);
 include('loadohsce.php');
-Ohsce_eng_socket_client($ohsceclient,'tcp',7628,'127.0.0.1'); //创建一个TCP客户端资源并连接27.0.0.1:7626
+Ohsce_eng_socket_client($ohsceclient,'tcp',7626,'127.0.0.1'); //创建一个TCP客户端资源并连接27.0.0.1:7626
 Ohsce_socketsend($ohsceclient['socket'],"\x01\x03\x00\x01\x00\x04\x15\xc9");  //发送数据
 //Ohsce_socketsend($ohsceclient['socket'],array('in'=>"01030001000415c9",'bin'=>true));
 echo Ohsce_socketread($ohsceclient['socket'],1024)[1]; //收取回复数据
