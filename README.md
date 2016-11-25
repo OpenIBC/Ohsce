@@ -17,7 +17,7 @@
 <br />一、检查环境是否支持OHSCE
 <br />系统：Windows / Linux / OSX
  <br />         建议:WINDOWSSERVER2008及以上 UbuntuServer14.04LTS及以上
-<br />PHP:5.3及以上
+<br />PHP:5.4及以上
 <br />          建议PHP5.4及以上
 <br />PHP扩展:
  <br />          Socket,Shmop,Curl,dio(建议)
