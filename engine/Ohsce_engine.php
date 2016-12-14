@@ -518,6 +518,7 @@ sleep(30);
 goto terror;
 comserver:
 $oibc_cnp_csa=getopt('r:m:p:c:');
+Ohsce_eng_serial_setspace(3);
 Ohsce_eng_serial_creat($hscecom,trim($oibc_cnp_csa['c'])); 
 Ohsce_eng_serial_open($hscecom,false);
 function comserveraccept(&$socket,$ip,$port,$zv){ 
