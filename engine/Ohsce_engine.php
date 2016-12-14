@@ -173,7 +173,6 @@ olmdstarloop:
 					$ohsce_olmd_mhold_canwritey[$ohsce_olmd_cnew_k]=1;
 				}
 			}
-			echo $ohsce_olmd_cnew_k;
 			$ohsce_olmd_channe_rdate['res']=true;
 			$ohsce_olmd_channe_rdate['key']=$ohsce_olmd_cnew_k;
 			ohsce_reChannel($ohsce_olmd_channe,$ohsce_olmd_channe_rdate,$ohsce_olmd_channe_from,$ohsce_olmd_channe_port);

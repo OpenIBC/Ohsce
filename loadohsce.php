@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.24_B
+OHSCE_V0.1.25_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -29,3 +29,5 @@ include(OHSCE_ROOTDIR.'/lib/oibc_sce_fuc.php');
 include(OHSCE_ROOTDIR.'/lib/oibc_sce_eng.php');
 include(OHSCE_ROOTDIR.'/lib/ohsce_Channel.php');
 define('OHSCE_OS',Ohsce_getos($oibc_sce_os));
+$ohsce_eng_socket_client_wait=0;
+$ohsce_eng_serial_wait=0;

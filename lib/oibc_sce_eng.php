@@ -1,12 +1,12 @@
 <?php
 /*
-OHSCE_V0.1.23_B
+OHSCE_V0.1.25_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
 作者保留全部权利，请依照授权协议使用。
 */
-function Ohsce_eng_socket_client(&$res,$protocol,$port,$ip=null,$AF='ipv4',$sync=true,$mode='defalut'){
+function Ohsce_eng_socket_client(&$res,$protocol,$port,$ip=null,$AF='ipv4',$sync=true,$mode='defalut',$space=0){
 	$protocol=strtoupper($protocol);
 	$port=intval($port);
 	$mode=strtolower($mode);
@@ -50,9 +50,27 @@ function Ohsce_eng_socket_client(&$res,$protocol,$port,$ip=null,$AF='ipv4',$sync
 	$res['stime']=$stime;
 	$res['rtimeu']=$rtimeu;
 	$res['stimeu']=$stimeu;
+	$res['last']=microtime()-100;
+	if($space!="0") goto setspace;
+	global $ohsce_eng_socket_client_wait;
+	if(isset($ohsce_eng_socket_client_wait)){
+	$res['space']=intval($ohsce_eng_socket_client_wait);
+	}else{
+	$ohsce_eng_socket_client_wait=0;
+	setspace:
+	$res['space']=intval($space);
+	}
 	terror:
 		$res['connect']=false;
 	return $res;
+}
+function Ohsce_eng_socket_client_setspace($spacetime=0){
+	if($spacetime<0){
+		return false;
+	}
+	global $ohsce_eng_socket_client_wait;
+	$ohsce_eng_socket_client_wait=intval($spacetime);
+	return true;
 }
 function Ohsce_eng_socket_server(&$res,$protocol,$port,$ip=null,$fuclist,$callbackaccept=null,$AF='ipv4',$sync=true,$mode='defalut',$max=null){
 	/*0.2.0之后移除callbackaccept输入*/
@@ -118,6 +136,8 @@ function Ohsce_eng_socket_server(&$res,$protocol,$port,$ip=null,$fuclist,$callba
 	$res['callback']=$callback;
 	$res['callbackaccept']=$callbackaccept;
 	$res['fap']=$ohscefap;
+	$res['last']=microtime()-100;
+	$res['space']=0;
 	return $res;
 	terror:
 		$res['connect']=false;
@@ -129,6 +149,20 @@ function Ohsce_eng_socket_server_close(&$res){
 	return $res;
 }
 function oibc_sce_socket_send(&$oibc_sce,$in,$len=null,$mode=null,$to=null,$port=null,$flags=0,$fast=null){
+	$ohsce_eng_socket_client_wait=$oibc_sce['space'];
+	$mnow=microtime();
+	if($ohsce_eng_socket_client_wait!=0){
+	if($ohsce_eng_socket_client_wait>1){
+	$mnowc=$mnow-$oibc_sce['last'];
+	if($mnowc<$ohsce_eng_socket_client_wait){
+		$mnowc=$ohsce_eng_socket_client_wait-$mnowc;
+		usleep($mnowc);
+		unset($mnowc);
+	}
+	}
+	}else{
+	$ohsce_eng_socket_client_wait=0;
+	}
 	if(null==$len){
 		$len=strlen($in);
 	}
@@ -368,7 +402,7 @@ function Ohsce_eng_socket_server_runudp($Ohsce,$stop=null,$speed=1,$callstop=fal
 	if(!isset($res['msg'])) $res['msg']='guest'.OIBC_VERSON;
 	return $res;
 }
-function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on'){
+function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on',$space=0){
 	if(OHSCE_OS=="Windows") $baud=Ohsce_getbaud($baud);
 	$res['open']=false;
 	$res['comr']=null;
@@ -387,7 +421,25 @@ function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity
 	$res['dtr']=$dtr;
 	$res['rts']=$rts;
 	$res['mode']=$mode;
+	$res['last']=microtime()-100;
+	if($space!="0") goto setspace;
+	global $ohsce_eng_serial_wait;
+	if(isset($ohsce_eng_serial_wait)){
+	$res['space']=intval($ohsce_eng_serial_wait);
+	}else{
+	$ohsce_eng_serial_wait=0;
+	setspace:
+	$res['space']=intval($space);
+	}
 	return $res;
+}
+function Ohsce_eng_serial_setspace($spacetime=0){
+	if($spacetime<0){
+		return false;
+	}
+	global $ohsce_eng_serial_wait;
+	$ohsce_eng_serial_wait=intval($spacetime);
+	return true;
 }
 function Ohsce_eng_serial_open(&$oibc,$set=true){
 	if($set!=false){
@@ -402,6 +454,21 @@ function Ohsce_eng_serial_open(&$oibc,$set=true){
 	return $oibc;
 }
 function Ohsce_eng_serial_write(&$oibc,$data,$thex=false){
+	$ohsce_eng_serial_wait=$oibc['space'];
+	$mnow=microtime();
+	if($ohsce_eng_serial_wait!=0){
+	if($ohsce_eng_serial_wait>1){
+	$mnowc=$mnow-$oibc['last'];
+	if($mnowc<$ohsce_eng_serial_wait){
+		$mnowc=$ohsce_eng_serial_wait-$mnowc;
+		usleep($mnowc);
+		unset($mnowc);
+	}
+	}
+	}else{
+	$ohsce_eng_serial_wait=0;
+	}
+	$oibc['last']=$mnow;
 	if($oibc['comr']!=true){
 		$res[0]=false;
 		$res[1]='OpenIBCSCE_U MUST OPEN FIRST!'.OIBC_VERSON;
@@ -431,9 +498,14 @@ function Ohsce_eng_serial_read(&$oibc,&$data,$len=null,$thex=false,$timeout=3){
 	$len=$len-strlen($datab);
 	}while(($len>0)and((time()-$stime)<3));
 	}
+	if(($data=="")or($data==null)){
+		$data=null;
+		goto frjs;
+	}
 	if($thex){
 		$data=bin2hex($data);
 	}
+	frjs:
 	return $data;
 }
 function Ohsce_eng_serial_comwr(&$oibc,$wbuf,$wlen=null,&$rbuf,$rlen=2,$mode=0){

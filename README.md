@@ -1,5 +1,5 @@
 # OHSCE高可靠性的PHP通信框架.
-<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.22 2016-10-14
+<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.24 2016-11-22
 <br />开发者QQ群：374756165（新2016-09） 捐助: http://www.ohsce.com/index.php/company/
 <br /><img src="http://www.ohsce.com/data/upload/201611/f_d4f69a0cecf5298f56449166d0fe43c3.png"></img>
 #Open HI-REL Signal Communication Engine
@@ -17,8 +17,8 @@
 <br />一、检查环境是否支持OHSCE
 <br />系统：Windows / Linux / OSX
  <br />         建议:WINDOWSSERVER2008及以上 UbuntuServer14.04LTS及以上
-<br />PHP:5.3及以上
-<br />          建议PHP5.4及以上
+<br />PHP:5.4及以上
+<br />          建议PHP5.4.9及以上
 <br />PHP扩展:
  <br />          Socket,Shmop,Curl,dio(建议)
 <br />二、修改配置文件
