@@ -1,1 +1,1 @@
-d:\phpstudy4iis\php54n\php.exe %cd%\comExample.php
+php %cd%\comExample.php
