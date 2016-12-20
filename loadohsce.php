@@ -1,11 +1,11 @@
 <?php
 /*
 OHSCE_V0.1.25_B
-¸ß¿É¿¿ÐÔµÄPHPÍ¨ÐÅ¿ò¼Ü¡£
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æž¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ð­ÒéÊ¹ÓÃ¡£
-¸ÃÎÄ¼þ½ûÖ¹¸ÄÃû!·ñÔò¿ÉÄÜ»áÎÞ·¨ÔËÐÐ£¡
+@ä½œè€…:æž—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æŽˆæƒåè®®ä½¿ç”¨ã€‚
+è¯¥æ–‡ä»¶ç¦æ­¢æ”¹å!å¦åˆ™å¯èƒ½ä¼šæ— æ³•è¿è¡Œï¼
 */
 error_reporting(E_ALL);
 if(!defined('IN_OHSCE')){
@@ -30,4 +30,4 @@ include(OHSCE_ROOTDIR.'/lib/oibc_sce_eng.php');
 include(OHSCE_ROOTDIR.'/lib/ohsce_Channel.php');
 define('OHSCE_OS',Ohsce_getos($oibc_sce_os));
 $ohsce_eng_socket_client_wait=0;
-$ohsce_eng_serial_wait=0;
+$ohsce_eng_serial_wait=3;
