@@ -510,7 +510,8 @@ function Ohsce_eng_serial_read(&$oibc,&$data,$len=null,$thex=false,$timeout=3){
 }
 function Ohsce_eng_serial_comwr(&$oibc,$wbuf,$wlen=null,&$rbuf,$rlen=2,$mode=0){
 	Ohsce_eng_serial_write($oibc,$wbuf,$wlen);
-    Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
+	usleep(3000);
+        Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
 	return $rbuf;
 }
 function Ohsce_eng_serial_npcomwr(&$oibc,$wdata,&$rdata,$thex=false){
