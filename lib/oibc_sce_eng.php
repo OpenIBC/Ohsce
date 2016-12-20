@@ -402,7 +402,7 @@ function Ohsce_eng_socket_server_runudp($Ohsce,$stop=null,$speed=1,$callstop=fal
 	if(!isset($res['msg'])) $res['msg']='guest'.OIBC_VERSON;
 	return $res;
 }
-function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on',$space=3){
+function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on',$space=0){
 	if(OHSCE_OS=="Windows") $baud=Ohsce_getbaud($baud);
 	$res['open']=false;
 	$res['comr']=null;
