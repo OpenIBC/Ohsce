@@ -30,4 +30,4 @@ include(OHSCE_ROOTDIR.'/lib/oibc_sce_eng.php');
 include(OHSCE_ROOTDIR.'/lib/ohsce_Channel.php');
 define('OHSCE_OS',Ohsce_getos($oibc_sce_os));
 $ohsce_eng_socket_client_wait=0;
-$ohsce_eng_serial_wait=3;
+$ohsce_eng_serial_wait=3000;
