@@ -20,7 +20,7 @@
 <br />PHP:5.4及以上
 <br />          建议PHP5.4.9及以上
 <br />PHP扩展:
- <br />          Socket,Shmop,Curl,dio(建议)
+ <br />          Socket,Shmop,Curl
 <br />二、修改配置文件
 <br />           /config/oibc_sce_config.php
 <br />三、运行测试程序
