@@ -14,9 +14,9 @@ define('IN_OHSCE', TRUE);
 if(file_exists('./config/oibc_sce_config.php')){
 define('OHSCE_ROOTDIR',dirname(__FILE__));
 }elseif(file_exists('./Ohsce/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR','/Ohsce/'.dirname(__FILE__));
+define('OHSCE_ROOTDIR',dirname(__FILE__).'/Ohsce/');
 }elseif(file_exists('./OHSCE/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR','/OHSCE/'.dirname(__FILE__));
+define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
 }else{
 	exit('Can not find Ohsce or OHSCE!');
 	sleep(30);
