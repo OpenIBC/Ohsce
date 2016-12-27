@@ -1,13 +1,13 @@
 <?php
 /*
 OHSCE_V0.1.25_B
-¸ß¿É¿¿ÐÔµÄPHPÍ¨ÐÅ¿ò¼Ü¡£
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æž¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ð­ÒéÊ¹ÓÃ¡£
-¸ÃÎÄ¼þ½ûÖ¹¸ÄÃû!·ñÔò¿ÉÄÜ»áÎÞ·¨ÔËÐÐ£¡
+@ä½œè€…:æž—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æŽˆæƒåè®®ä½¿ç”¨ã€‚
+è¯¥æ–‡ä»¶ç¦æ­¢æ”¹å!å¦åˆ™å¯èƒ½ä¼šæ— æ³•è¿è¡Œï¼
 */
-/* oibc_º¯Êý¼¯ ²¿·Ö°æ ÑË¸î°æ£¬±ØÐëÊÖ¶¯Ö¸¶¨×¼È·²ÎÊý. */
+/* oibc_å‡½æ•°é›† éƒ¨åˆ†ç‰ˆ é˜‰å‰²ç‰ˆï¼Œå¿…é¡»æ‰‹åŠ¨æŒ‡å®šå‡†ç¡®å‚æ•°. */
 function ohsce_maketoken($key,$token){
 	return md5(md5($key.sha1($token)));
 }
@@ -576,11 +576,11 @@ function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$
 	}
 	if(isset($postdata)){
 		if(is_array($postdata)){
-		Ohsce_url_setpost($ohscecur,$postdata);
+		Ohsce_url_setpost($ohscecurl,$postdata);
 		}elseif(!bts_is_json($postdata)){
-		Ohsce_url_setstr($ohscecur,$postdata);
+		Ohsce_url_setstr($ohscecurl,$postdata);
 		}else{
-		Ohsce_url_setjson($ohscecur,$postdata);
+		Ohsce_url_setjson($ohscecurl,$postdata);
 		}
 	}
 	if($cookie!=false){
@@ -673,7 +673,7 @@ function Ohsce_url_cp($url,$qz=true){
 }
 function Ohsce_url_seturl($url,&$curl=null){
 	$curl = curl_init();
-    // ÉèÖÃÄãÐèÒª×¥È¡µÄURL
+    // è®¾ç½®ä½ éœ€è¦æŠ“å–çš„URL
     curl_setopt($curl, CURLOPT_URL, $url);
 	return $curl;
 }
@@ -683,14 +683,14 @@ function Ohsce_url_setmode(&$curl,$mode="nomal",$timeout=5){
 			curl_setopt($curl, CURLOPT_HEADER, 0);
 		    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // httpsÇëÇó ²»ÑéÖ¤Ö¤ÊéºÍhosts
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // httpsè¯·æ±‚ ä¸éªŒè¯è¯ä¹¦å’Œhosts
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         break;
 		case "nomal":
 		default:
 			curl_setopt($curl, CURLOPT_HEADER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);//Í¨³£Çé¿öÏÂ¹¤¿Ø³¡¾°¶¯×÷ÇëÇó²»Ö¸ÍûÍêÈ«·µ»Ø
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);//é€šå¸¸æƒ…å†µä¸‹å·¥æŽ§åœºæ™¯åŠ¨ä½œè¯·æ±‚ä¸æŒ‡æœ›å®Œå…¨è¿”å›ž
 		break;
 	}
 	return $curl;
