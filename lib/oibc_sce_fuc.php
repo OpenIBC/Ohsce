@@ -812,7 +812,7 @@ function Ohsce_comset($com,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xo
 	switch(OHSCE_OS){
 	case "Windows":
 	if($fc=="none"){
-	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." to=".$to." octs=".$octs." idsr=".$idsr." dtr=".$dtr." rts=".$rts;
+	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." to=".$to." octs=".$octs." idsr=".$idsr." dtr=".$dtr." res=".$rts;
 	}else{
 	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." odsr=".$odsr." to=".$to." idsr=".$idsr." dtr=".$dtr." ".Ohsce_comfc($fc);
 	}
