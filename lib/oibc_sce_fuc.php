@@ -808,13 +808,19 @@ function Ohsce_comfc($fc){
 	return $fc;
 }
 /* fc for LINUX/OSX OTHER FOR WINDOWS*/
-function Ohsce_comset($com,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on'){
+function Ohsce_comset($com,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='un',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='off'){
 	switch(OHSCE_OS){
 	case "Windows":
 	if($fc=="none"){
-	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." to=".$to." octs=".$octs." idsr=".$idsr." dtr=".$dtr." res=".$rts;
+	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." xon=".$xon." odsr=".$odsr." octs=".$octs." idsr=".$idsr." dtr=".$dtr." rts=".$rts;
+	if($to!="un"){
+		 $exsms=$exsms."to=".$to;
+	}
 	}else{
 	$exsms="mode ".$com.": baud=".$baud." parity=".Ohsce_comparity($parity)." data=".$data." stop=".$stop." odsr=".$odsr." to=".$to." idsr=".$idsr." dtr=".$dtr." ".Ohsce_comfc($fc);
+	if($to!="un"){
+		 $exsms=$exsms."to=".$to;
+	}
 	}
 	break;
 	case "Linux":
