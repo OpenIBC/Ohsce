@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.24_B
+OHSCE_V0.1.26_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -511,6 +511,8 @@ if((base64_decode($ohsce_cnp_np)!=false)and(base64_decode($ohsce_cnp_np)!="")and
 $ohsce_cnp_system_np=$OHSCE_pdefendC_vbs.' '.$ohsce_cnp_np;
 if($oibc_cnp_csa['f']=="system"){
 system($ohsce_cnp_system_np);
+}elseif($oibc_cnp_csa['f']=="exec"){
+exec($ohsce_cnp_system_np);
 }else{
 popen($ohsce_cnp_system_np,'r');
 }

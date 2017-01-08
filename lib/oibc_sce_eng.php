@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.25_B
+OHSCE_V0.1.26_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -402,7 +402,7 @@ function Ohsce_eng_socket_server_runudp($Ohsce,$stop=null,$speed=1,$callstop=fal
 	if(!isset($res['msg'])) $res['msg']='guest'.OIBC_VERSON;
 	return $res;
 }
-function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='off',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='on',$space=0){
+function Ohsce_eng_serial_creat(&$res,$com,$flags="1",$mode=0,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xon='off',$to='un',$octs='off',$odsr='off',$idsr='off',$dtr='on',$rts='off',$space=0){
 	if(OHSCE_OS=="Windows") $baud=Ohsce_getbaud($baud);
 	$res['open']=false;
 	$res['comr']=null;
@@ -510,7 +510,8 @@ function Ohsce_eng_serial_read(&$oibc,&$data,$len=null,$thex=false,$timeout=3){
 }
 function Ohsce_eng_serial_comwr(&$oibc,$wbuf,$wlen=null,&$rbuf,$rlen=2,$mode=0){
 	Ohsce_eng_serial_write($oibc,$wbuf,$wlen);
-    Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
+	usleep(3000);
+        Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
 	return $rbuf;
 }
 function Ohsce_eng_serial_npcomwr(&$oibc,$wdata,&$rdata,$thex=false){

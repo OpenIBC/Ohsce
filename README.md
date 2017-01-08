@@ -1,10 +1,10 @@
 # OHSCE高可靠性的PHP通信框架.
-<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.24 2016-11-22
+<BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.25 2016-12-15
 <br />开发者QQ群：374756165（新2016-09） 捐助: http://www.ohsce.com/index.php/company/
 <br /><img src="http://www.ohsce.com/data/upload/201611/f_d4f69a0cecf5298f56449166d0fe43c3.png"></img>
 #Open HI-REL Signal Communication Engine
 <br />PHP以太网（TCP/UDP/ICMP）、RS232、RS485通信，可广泛直接或桥接各种网络工程通信。
-<br />特别合适于对可靠性要求较高、上位机与末端协同工作的场景。如物联网设备通信、智能化系统、工业与自动化系统、可靠网络服务器。
+<br />特别合适于对可靠性要求较高、上位机与末端协同工作的场景。如物联网设备通信、智能化系统、工业与自动化系统、可靠网络服务器、中控&边控&驱动。
 <br />可运行于Windows、Linux、OS X。对Windows提供了全项功能支持，与自动化生态亲和。
 <br />不过分追求高性能，充分平衡了可靠性与高性能。
 <br />天生支持分布式，可大规模部署。
@@ -20,7 +20,7 @@
 <br />PHP:5.4及以上
 <br />          建议PHP5.4.9及以上
 <br />PHP扩展:
- <br />          Socket,Shmop,Curl,dio(建议)
+ <br />          Socket,Shmop,Curl
 <br />二、修改配置文件
 <br />           /config/oibc_sce_config.php
 <br />三、运行测试程序

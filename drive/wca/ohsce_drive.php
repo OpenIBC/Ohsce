@@ -1,14 +1,16 @@
 <?php
 /*
-OHSCE_V0.1.24_B
+OHSCE_V0.1.26_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
 作者保留全部权利，请依照授权协议使用。
 该文件禁止改名!否则可能会无法运行！
+
+WCA 0.0.4
 */
 if(!defined('IN_OHSCE')){
-exit('Forbidden!-ohsce_wca_v0.0.1');
+exit('Forbidden!-ohsce_wca_v0.0.4');
 }
 function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 	if(empty($inaction)){
@@ -97,6 +99,16 @@ function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 			}
 			Ohsce_eng_serial_write($hscecom,$comdata,true);
             $redata=true;
+			goto freturn;
+		case "r":
+			if(!isset($_GET['comdata'])){
+			return 'Undefind Comdata!';
+		    }
+			$comdata=trim($_GET['comdata']);
+			if((strlen($comdata)%2)!=0){
+				$comdata='0'.$comdata;
+			}
+			Ohsce_eng_serial_read($hscecom,$redata,null,true);
 			goto freturn;
 		default:
 			return 'UnDefind Action!';

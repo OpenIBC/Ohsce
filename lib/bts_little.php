@@ -46,3 +46,20 @@ function bts_is_json($str){
 function bts_bas_data2hex($data){
 	return str_split($data,2);
 }
+function bts_hex2hex($hex,$len='x'){
+	$hlen=strlen($hex);
+	if($len=="x"){
+		if(($hlen%2)!=0){
+			$hex='0'.$hex;
+			return $hex;
+		}
+	}
+	$hlenc=($len*2)-$hlen;
+	if($hlenc>0){
+		    do{
+			$hex='0'.$hex;
+			$hlenc=$hlenc-1;
+		    }while($hlenc>0);
+		}
+	return $hex;
+}

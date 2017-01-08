@@ -1,11 +1,11 @@
 <?php
 /*
 OHSCE_V0.1.25_B
-¸ß¿É¿¿ÐÔµÄPHPÍ¨ÐÅ¿ò¼Ü¡£
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æž¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ð­ÒéÊ¹ÓÃ¡£
-¸ÃÎÄ¼þ½ûÖ¹¸ÄÃû!·ñÔò¿ÉÄÜ»áÎÞ·¨ÔËÐÐ£¡
+@ä½œè€…:æž—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æŽˆæƒåè®®ä½¿ç”¨ã€‚
+è¯¥æ–‡ä»¶ç¦æ­¢æ”¹å!å¦åˆ™å¯èƒ½ä¼šæ— æ³•è¿è¡Œï¼
 */
 error_reporting(E_ALL);
 if(!defined('IN_OHSCE')){
@@ -14,20 +14,21 @@ define('IN_OHSCE', TRUE);
 if(file_exists('./config/oibc_sce_config.php')){
 define('OHSCE_ROOTDIR',dirname(__FILE__));
 }elseif(file_exists('./Ohsce/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR','/Ohsce/'.dirname(__FILE__));
+define('OHSCE_ROOTDIR',dirname(__FILE__).'/Ohsce/');
 }elseif(file_exists('./OHSCE/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR','/OHSCE/'.dirname(__FILE__));
+define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
 }else{
 	exit('Can not find Ohsce or OHSCE!');
 	sleep(30);
 }
-define('OIBC_VERSON','0.1.24_beta');
+define('OIBC_VERSON','0.1.26_beta');
 include(OHSCE_ROOTDIR.'/config/oibc_sce_config.php');
 include(OHSCE_ROOTDIR.'/config/oibc_drive_config.php');
 include(OHSCE_ROOTDIR.'/lib/bts_little.php');
 include(OHSCE_ROOTDIR.'/lib/oibc_sce_fuc.php');
 include(OHSCE_ROOTDIR.'/lib/oibc_sce_eng.php');
 include(OHSCE_ROOTDIR.'/lib/ohsce_Channel.php');
+include(OHSCE_ROOTDIR.'/config/oibc_ext_load.php');
 define('OHSCE_OS',Ohsce_getos($oibc_sce_os));
 $ohsce_eng_socket_client_wait=0;
-$ohsce_eng_serial_wait=0;
+$ohsce_eng_serial_wait=3000;
