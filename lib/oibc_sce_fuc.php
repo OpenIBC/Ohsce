@@ -2,9 +2,6 @@
 /*
 <<<<<<< HEAD
 OHSCE_V0.1.26_B
-=======
-OHSCE_V0.1.25_B
->>>>>>> origin/master
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -1034,7 +1031,6 @@ function Ohsce_exec($exec,$mode=0){
 		return false;
 	}
 function ohsce_smCreat(&$mkey,$key,$flags="c",$mode=0644,$size=1014){
-	//$key=dechex(intval($key));
 	$size=$size+10;
 	$mkey=shmop_open($key,$flags,$mode,$size);
 	if(false==$mkey){
