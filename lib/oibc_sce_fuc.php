@@ -1,6 +1,5 @@
 <?php
 /*
-<<<<<<< HEAD
 OHSCE_V0.1.26_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
@@ -838,7 +837,7 @@ function Ohsce_comset($com,$baud=9600,$parity='n',$data=8,$stop=1,$fc='none',$xo
 	Ohsce_exec($exsms);
 	return true;
 }
-function 0hsce_comset_timeout($com,$to='on'){
+function Ohsce_comset_timeout($com,$to='on'){
 	if(($to==on)or(true==$to)){
 	$exsms="mode ".$com.": to=on";
 	}else{
