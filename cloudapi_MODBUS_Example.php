@@ -14,7 +14,7 @@ include('loadohsce.php');
 Ohsce_eng_serial_creat($hscecom,"com1");
 Ohsce_eng_serial_open($hscecom); 
 //ohsce_drive_cloud_modbus($hscecom,"RTU","01",'01',"40001","0002");//调用云MODBUS驱动 方式一
-Ohsce_eng_serial_write($hscecom,ohsce_drive_cloud_modbus($hscecom,"RTU","01",'01',"40001","0002")['data'],false);//调用云MODBUS驱动  方式二
+Ohsce_eng_serial_write($hscecom,ohsce_drive_cloud_modbus(null,"RTU","01",'01',"40001","0002")['data'],false);//调用云MODBUS驱动  方式二
 Ohsce_eng_serial_close($hscecom);
 
 sleep(30);
