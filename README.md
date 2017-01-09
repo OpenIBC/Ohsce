@@ -78,7 +78,7 @@
 <br /><img src="http://www.ohsce.org/data/upload/201609/f_8f57eaa803acc6b137a5dcacf47a4995.gif"></img>
 <br />
 <br />3.2.2串口服务器
-<br /><img src="http://www.ohsce.org/img/COMSERVER.gif"></img>
+<br /><img src="http://www.ohsce.org/img/COMSERVER.gif"></i>
 <br />3.3测试使用OHSCE的进程守护
 <br />我们先写一个无用的自杀进程
 <br /><?php
@@ -93,6 +93,11 @@
 <br /><img src="http://www.ohsce.org/data/upload/201609/f_fb79fdc57845fe95cfa6a6812a471483.gif"></img>
 <br />
 <br />正式运行使用隐藏窗口模式。
+<br />
+<br />3.4.1CLOUD_API
+<br />3.4.2 CLOUD_MODBUS_DRIVE
+<BR />Ohsce_drive_cloud_modbus(null,"RTU","01",'01',"40001","0002");
+<br />
 <br />不断完善中，感谢支持。
 #交流与捐助
 开发者QQ群：
