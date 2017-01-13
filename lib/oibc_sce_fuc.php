@@ -525,7 +525,7 @@ function Ohsce_casepr($pr,&$re){
 		return $re;
 	}
 }
-function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$short=true){
+function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$short=true,$headers=null){
 	if(is_array($surl)){
 		if(isset($surl['postdata'])){
 		$postdata=$surl['postdata'];
@@ -603,6 +603,15 @@ function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$
 	}
 	if(isset($proxy,$proxyaddress)){
 		Ohsce_url_setproxy($ohscecurl,$proxy,$proxyaddressr,$proxyuser,$proxypassword);
+	}
+	if(null!=$headers){
+		if(is_array($headers)){
+			if(isset($headers[0],$headers[1])){
+				if(true==$headers[0]){
+					Ohsce_url_setheader($ohscecurl,$headers[1]);
+				}
+			}
+		}
 	}
 	curl_setopt($ohscecurl,CURLOPT_USERAGENT,'OpenHIRELSignalCommunicationEngine(MAIN)'.OIBC_VERSON); 
 	$odata=Ohsce_url_exec($ohscecurl);
@@ -694,6 +703,10 @@ function Ohsce_url_setmode(&$curl,$mode="nomal",$timeout=5){
 		break;
 	}
 	return $curl;
+}
+function Ohsce_url_setheader(&$cr,$headers){
+	curl_setopt($cr, CURLOPT_HEADER, true);
+    curl_setopt($cr, CURLOPT_HTTPHEADER, $headers);
 }
 function Ohsce_url_setpost(&$cr,$data){
 	curl_setopt($cr, CURLOPT_POST, 1);
