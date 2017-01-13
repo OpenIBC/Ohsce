@@ -12,6 +12,15 @@
 <br />过程化函数风格的框架具备高效的特性。
 <br />特别亲切于工业自动化工程师、硬件工程师、物联网工程师、追求效率的PHP工程师的写法风格。
 <br />OHSCE开放源代码，在OHSCE授权协议框架下您可以免费使用！
+<br />PHP Ethernet (TCP/UDP/ICMP), RS232, RS485 communications, can be directly or directly bridged a variety of network engineering communications.
+<br />It is especially suitable for the scene with high reliability, the upper computer and the end work together. Things such as equipment communications, intelligent systems, industrial and automation systems, reliable network server, central control & edge control & drive.
+<br />Can run on Windows, Linux, OS X. Windows provides a full range of functional support, and automated ecological affinity.
+Not too much pursuit of high performance, fully balanced reliability and high performance.
+<br />Natural support for distributed, large-scale deployment.
+<br />In the premise of ensuring the reliability of your network can run out of strong performance.
+<br />The framework of the process function style has the characteristics of high efficiency.
+<br />Special kind in industrial automation engineers, hardware engineers, network engineers, the pursuit of efficiency PHP engineer writing style.
+<br />OHSCE open source code, under the OHSCE license agreement framework you can use free!
 #快速入门
 <br />http://www.ohsce.com/index.php/page/qstar.html
 <br />一、检查环境是否支持OHSCE
