@@ -548,7 +548,7 @@ function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$
 	$cp=Ohsce_url_cp($url);
 	if($cp!=false){
 		Ohsce_url_seturl($url,$ohscecurl);
-		switch(strtolower($cp[1])){
+		switch(strtolower($cp[0])){
 			case "ftp":
 				if(!isset($surl["files"],$surl["ud"])){
 				$cp[1]='error';
