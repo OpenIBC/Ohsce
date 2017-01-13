@@ -604,6 +604,10 @@ function Ohsce_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$
 	if(isset($proxy,$proxyaddress)){
 		Ohsce_url_setproxy($ohscecurl,$proxy,$proxyaddressr,$proxyuser,$proxypassword);
 	}
+	if(isset($surl['headers'])){
+		$headers[0]=true;
+		$headers[1]=$surl['headers'];
+	}
 	if(null!=$headers){
 		if(is_array($headers)){
 			if(isset($headers[0],$headers[1])){
