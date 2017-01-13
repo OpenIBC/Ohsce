@@ -114,4 +114,4 @@ Not too much pursuit of high performance, fully balanced reliability and high pe
 374756165（新2016-09）
 关于我们&合租:
 http://www.ohsce.com/index.php/company/捐助：
-<br /><img src="http://www.ohsce.com/data/upload/201609/f_435f9ddd005975f43d6cd2559a63e138.jpg" height="150px" width="150px"><img src="http://www.ohsce.com/data/upload/201609/f_5c89175114fe61466ad853795ee2c9cb.png" height="150px" width="150px"></img>
+<br /><img src="http://www.ohsce.com/data/upload/201609/f_435f9ddd005975f43d6cd2559a63e138.jpg" height="150px" width="150px"><img src="http://www.ohsce.com/data/upload/201609/f_5c89175114fe61466ad853795ee2c9cb.png" height="170px" width="170px"></img>
