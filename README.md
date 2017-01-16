@@ -2,7 +2,7 @@
 <BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.1.26 2017-01-09
 <br />开发者QQ群：374756165（新2016-09） 捐助: http://www.ohsce.com/index.php/company/
 <br /><img src="http://www.ohsce.com/data/upload/201611/f_d4f69a0cecf5298f56449166d0fe43c3.png"></img>
-<br />官方源码源地址：
+<br />官方源码源地址（获取最新发布的官方版）：
 <br />GITHUB:https://github.com/OpenIBC/Ohsce
 <br />GIT@OSC:https://git.oschina.net/SFXH/Ohsce
 #Open HI-REL Signal Communication Engine
