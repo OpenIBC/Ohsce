@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.26_B
+OHSCE_V0.1.27_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -66,6 +66,13 @@ function Ohsce_getos(&$os){
 	}
 	js:
 		return $os;
+}
+function Ohsce_getos_64(){
+	$cs=2147483649;
+    if(intval($cs)>0){
+		return true;
+	}
+    return false;
 }
 function Ohsce_createSocket(&$socket=null,$protocol='TCP',$block=1,$reuse=null,$rtime=2,$stime=3,$rtimeu=0,$stimeu=0,$AF='ipv4'){
 switch($protocol){
