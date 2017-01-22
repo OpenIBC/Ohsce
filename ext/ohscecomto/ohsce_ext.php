@@ -16,6 +16,8 @@ function ohsce_ext_ohscecomto($com=null){
 	}
 	switch(OHSCE_OS){
 	case "Windows":
+	$exsms="mode ".$com.": to=on";
+	Ohsce_exec($exsms,0);
 	if(Ohsce_getos_64()){
     $exsms=OHSCE_ROOTDIR.'/ext/ohscecomto/ohscecomto_x64.exe -com '.$com;
 	}else{
