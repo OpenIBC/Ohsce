@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.25_B
+OHSCE_V0.1.27_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -62,4 +62,22 @@ function bts_hex2hex($hex,$len='x'){
 		    }while($hlenc>0);
 		}
 	return $hex;
+}
+function bts_str2bin($str){
+	$stra=str_split($str);
+	$res='';
+	foreach($stra as &$straa){
+		$res = $res.hex2bin(dechex(ord($straa)));
+	}
+	return $res;
+}
+function bts_bin2str($str){
+	$str=bin2hex($str);
+	$stra=str_split($str,2);
+	$res='';
+	foreach($stra as &$straa){
+		echo $straa.'|';
+		$res = $res.chr(hexdec($straa));
+	}
+	return $res;
 }

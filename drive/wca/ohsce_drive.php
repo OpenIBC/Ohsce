@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.26_B
+OHSCE_V0.1.27_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -10,7 +10,7 @@ HTTP://WWW.OHSCE.ORG
 WCA 0.0.4
 */
 if(!defined('IN_OHSCE')){
-exit('Forbidden!-ohsce_wca_v0.0.4');
+exit('Forbidden!-ohsce_wca_v0.0.5');
 }
 function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 	if(empty($inaction)){
@@ -62,6 +62,21 @@ function drive_wca_ohsce($drivename,$inaction=null,$indata=null){
 	}else{
 		$gfc=trim($_GET['fc']);
 		$comfirst=true;
+	}
+	if(!isset($_GET['init'])){
+		$ginit=true;
+	}else{
+		$ginit=trim($_GET['init']);
+		if($ginit=="false"){
+			$ginit=false;
+		}else{
+			$ginit=true;
+		}
+	}
+	if(($init==true)&&($comfirst==true)){
+		$comfirst=true;
+	}else{
+		$comfirst=false;
 	}
 	Ohsce_eng_serial_creat($hscecom,trim($_GET['com']),$flags,0,$baud=$gbaud,$parity=$gparity,$data=$gdata,$stop=$gstop,$gfc='none'); 
 	openagain:

@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.26_B
+OHSCE_V0.1.27_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -474,6 +474,10 @@ function Ohsce_eng_serial_write(&$oibc,$data,$thex=false){
 		$res[1]='OpenIBCSCE_U MUST OPEN FIRST!'.OIBC_VERSON;
 		return $res;
 	}
+	if($thex=="string"){
+		$thex=false;
+		$data=bts_str2bin($data);
+	}
 	if($thex){
 		$data=hex2bin($data);
 	}
@@ -501,6 +505,10 @@ function Ohsce_eng_serial_read(&$oibc,&$data,$len=null,$thex=false,$timeout=3){
 	if(($data=="")or($data==null)){
 		$data=null;
 		goto frjs;
+	}
+	if($thex=="string"){
+		$thex=false;
+		$data=bts_bin2str($data);
 	}
 	if($thex){
 		$data=bin2hex($data);
