@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.26_B
+OHSCE_V0.2.0_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -65,35 +65,11 @@ if(false==ohsce_smCreat($ohsce_olmd_in,$ohsce_olmd_id_in,"n")){
 	$errmsg='Share memmory key '.$ohsce_olmd_id_in.' must be free!';
 	goto terror;
 }
-
-$ohsce_olmd_id_in2=$ohsce_olmd_id_in+1;
-if(false==ohsce_smCreat($ohsce_olmd_in2,$ohsce_olmd_id_in2,"n")){
-	$errmsg='Share memmory key '.$ohsce_olmd_id_in2.' must be free!';
-	goto terror;
-}
-$ohsce_olmd_id_in3=$ohsce_olmd_id_in+2;
-if(false==ohsce_smCreat($ohsce_olmd_in3,$ohsce_olmd_id_in3,"n")){
-	$errmsg='Share memmory key '.$ohsce_olmd_id_in3.' must be free!';
-	goto terror;
-}
-
 $ohsce_olmd_id_out=$ohsce_olmd_id_in+3;
 if(false==ohsce_smCreat($ohsce_olmd_out,$ohsce_olmd_id_out,"n")){
 	$errmsg='Share memmory key '.$ohsce_olmd_id_out.' must be free!';
 	goto terror;
 }
-
-$ohsce_olmd_id_out2=$ohsce_olmd_id_in+4;
-if(false==ohsce_smCreat($ohsce_olmd_out2,$ohsce_olmd_id_out2,"n")){
-	$errmsg='Share memmory key '.$ohsce_olmd_id_out2.' must be free!';
-	goto terror;
-}
-$ohsce_olmd_id_out3=$ohsce_olmd_id_in+5;
-if(false==ohsce_smCreat($ohsce_olmd_out3,$ohsce_olmd_id_out3,"n")){
-	$errmsg='Share memmory key '.$ohsce_olmd_id_out3.' must be free!';
-	goto terror;
-}
-
 if(!ohsce_channel_server_creat($ohsce_olmd_channe,array('mode'=>'fastsocket','cport'=>intval(OHSCE_OLMD_MADDRESSPORT),'cip'=>OHSCE_MYIP_SYSTEM))){
 	$errmsg='Channel creat error!';
 	goto terror;
@@ -232,7 +208,7 @@ pcenter:
 $ohsce_pcenter_needrun=scandir($OHSCE_PLdir);
 $ohsce_pcenter_i=0;
 $ohsce_pcenter_mkey=array();
-foreach($ohsce_pcenter_needrun as $ohsce_pcenter_needrun_hp){
+foreach($ohsce_pcenter_needrun as &$ohsce_pcenter_needrun_hp){
 	if(substr($ohsce_pcenter_needrun_hp,-4)!=".php"){
 		continue;
 	}
@@ -298,7 +274,7 @@ if(!isset($ohsce_pcenter_willrun,$ohsce_pcenter_willrun_name,$ohsce_pcenter_runl
 	$ohsce_pcenter_mf=array();
 	goto pcenterstarlisten;
 }
-foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => $ohsce_pcenter_willrun_v){
+foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => &$ohsce_pcenter_willrun_v){
 	if($ohsce_pcenter_mf[$ohsce_pcenter_willrun_id]!=null){
 		pcenterrunagain:
 		if(false==ohsce_smRead($ohsce_pcenter_mf[$ohsce_pcenter_willrun_id],$ohsce_pcenter_callrm_w)){
@@ -339,7 +315,7 @@ foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => $ohsce_pcenter_wi
 if(OHSCE_OS!="Windows") goto pcenterlinuxstarlisten;
 pcenterstarlisten:
 pcenterlinuxstarlisten:
-foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => $ohsce_pcenter_willrun_v){
+foreach($ohsce_pcenter_willrun as $ohsce_pcenter_willrun_id => &$ohsce_pcenter_willrun_v){
 	if($ohsce_pcenter_mf[$ohsce_pcenter_willrun_id]!=null){
 		pcenterrunagainb:
 		if(false==ohsce_smRead($ohsce_pcenter_mf[$ohsce_pcenter_willrun_id],$ohsce_pcenter_callrm_w)){

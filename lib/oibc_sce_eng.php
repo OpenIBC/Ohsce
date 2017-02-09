@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.27_B
+OHSCE_V0.2.0_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -533,7 +533,77 @@ function Ohsce_eng_serial_close(&$oibc){
 	Ohsce_comclose($oibc['comr'],$oibc['mode']);
 	$oibc['open']=false;
 	$oibc['comr']=null;
+	return true;
 }
 function Ohsce_eng_url_c($surl,&$odata,$username=null,$password=null,$cookie=false,$short=true){
 return Ohsce_url_c($surl,$odata,$username=null,$password=null,$cookie=false,$short=true);
+}
+function Ohsce_eng_sm_creat(&$res,$key=null,$flags="c",$size=1014,$mode=0644){
+	if(null==$flags){
+		$flags="w";
+	}else{
+	$flags=strtolower($flags);
+	}
+	if(null==$key){
+		if(($flags=="w")or($flags=="a")){
+			return false;
+		}else{
+			return false;
+		}
+	}else{
+		$res['key']=intval($key);
+		if($res['key']<=0){
+			return false;
+		}
+	}
+	$res['fs']=$flags;
+	$res['l']=intval($size);
+	$res['mode']=$mode;
+	$res['oc']=0;
+	$res['sm']=null;
+	return $res;
+}
+function Ohsce_eng_sm_open(&$oibc){
+	if(ohsce_smCreat($res,$oibc['key'],$oibc['fs'],$oibc['mode'],$oibc['l'])==false){
+		if($oibc['oc']!=1){
+			return false;
+		}else{
+			if(shmop_read($res,0,0)==false){
+			return false;
+			}else{
+			$oibc['sm']=$res;
+			return $oibc;
+			}
+		}
+	}
+	$oibc['sm']=$res;
+	$oibc['oc']=1;
+	return $oibc;
+}
+function Ohsce_eng_sm_write(&$oibc,$data,$start=0){
+	if($oibc['oc']!="1"){
+		return false;
+	}
+	if($data!=null){
+		$data=ohsce_smEncode($data);
+	}
+	return ohsce_smWrite($oibc['sm'],$data,$start);
+}
+function Ohsce_eng_sm_read(&$oibc){
+	if($oibc['oc']!="1"){
+		return false;
+	}
+	ohsce_smRead($oibc['sm'],$data,false);
+	if((null===$data)or($data=='')){
+		return null;
+	}
+	return ohsce_smDecode($data);
+}
+function Ohsce_eng_sm_close(&$oibc){
+	if($oibc['sm']==null) goto smclosejs;
+	ohsce_smClose($oibc['sm']);
+	$oibc['sm']=null;
+	smclosejs:
+	$oibc['oc']=0;
+	return $oibc;
 }

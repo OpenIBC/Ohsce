@@ -1,1 +1,0 @@
-php %cd%\comExample.php

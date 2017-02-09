@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.27_B
+OHSCE_V0.2.0_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -21,7 +21,7 @@ define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
 	exit('Can not find Ohsce or OHSCE!');
 	sleep(30);
 }
-define('OIBC_VERSON','0.1.27_beta');
+define('OIBC_VERSON','0.2.0_beta');
 include(OHSCE_ROOTDIR.'/config/oibc_sce_config.php');
 include(OHSCE_ROOTDIR.'/config/oibc_drive_config.php');
 include(OHSCE_ROOTDIR.'/lib/bts_little.php');

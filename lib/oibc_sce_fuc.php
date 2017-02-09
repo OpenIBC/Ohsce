@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.27_B
+OHSCE_V0.2.0_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -73,6 +73,90 @@ function Ohsce_getos_64(){
 		return true;
 	}
     return false;
+}
+function Ohsce_base_iota_set($data,$type=null){
+	if(($data===null)or($data=='')){
+		return false;
+	}
+	global $ohsce_base_iota_type;
+	if($type!=null){
+		$ohsce_base_iota_type=$type;
+	}
+	if(empty($ohsce_base_iota_type)){
+		return false;
+	}
+	$ohsce_base_iota_data_zdy_name='ohsce_base_iota_data_zdy_'.$ohsce_base_iota_type;
+	global $$ohsce_base_iota_data_zdy_name;
+	$$ohsce_base_iota_data_zdy_name=$data;
+	return true;
+}
+function Ohsce_base_iota($type=null,$gl=false){
+	global $ohsce_base_iota_type;
+	if($type!=null){
+		$ohsce_base_iota_type=$type;
+	}
+	if(empty($ohsce_base_iota_type)){
+		$ohsce_base_iota_type='int';
+	}else{
+		$ohsce_base_iota_type=strtolower($ohsce_base_iota_type);
+	}
+	switch($ohsce_base_iota_type){
+		case "dx":
+		case "up":
+		goto dchars;
+		case "xx":
+		case "low":
+		goto xchars;
+		case "int":
+		case "int64":
+		case "int32":
+			goto iint;
+		default:
+	}
+		$ohsce_base_iota_data_zdy_name='ohsce_base_iota_data_zdy_'.$ohsce_base_iota_type;
+		global $$ohsce_base_iota_data_zdy_name;
+		if((empty($$ohsce_base_iota_data_zdy_name)) or $gl){
+			$$ohsce_base_iota_data_zdy_name=0;
+		}
+		$$ohsce_base_iota_data_zdy_name=intval($$ohsce_base_iota_data_zdy_name)+1;
+		$res=$$ohsce_base_iota_data_zdy_name;
+		goto js;
+	iint:
+		global $ohsce_base_iota_data_int;
+		if((empty($ohsce_base_iota_data_int)) or $gl){
+			$ohsce_base_iota_data_int=0;
+		}
+		$ohsce_base_iota_data_int=intval($ohsce_base_iota_data_int)+1;
+		$res=$ohsce_base_iota_data_int;
+		goto js;
+	dchars:
+		global $ohsce_base_iota_data_dc;
+	    if((empty($ohsce_base_iota_data_dc)) or $gl){
+			$ohsce_base_iota_data_dc=64;
+		}else{
+			$ohsce_base_iota_data_dc=intval($ohsce_base_iota_data_dc);
+		}
+		if($ohsce_base_iota_data_dc>=90){
+			$ohsce_base_iota_data_dc=64;
+		}
+		$ohsce_base_iota_data_dc=$ohsce_base_iota_data_dc+1;
+		$res=chr($ohsce_base_iota_data_dc);
+		goto js;
+	xchars:
+		global $ohsce_base_iota_data_xc;
+	    if((empty($ohsce_base_iota_data_xc)) or $gl){
+			$ohsce_base_iota_data_xc=96;
+		}else{
+			$ohsce_base_iota_data_xc=intval($ohsce_base_iota_data_xc);
+		}
+		if($ohsce_base_iota_data_xc>=122){
+			$ohsce_base_iota_data_xc=96;
+		}
+		$ohsce_base_iota_data_xc=$ohsce_base_iota_data_xc+1;
+		$res=chr($ohsce_base_iota_data_xc);
+		goto js;
+	js:
+		return $res;
 }
 function Ohsce_createSocket(&$socket=null,$protocol='TCP',$block=1,$reuse=null,$rtime=2,$stime=3,$rtimeu=0,$stimeu=0,$AF='ipv4'){
 switch($protocol){
@@ -1023,6 +1107,7 @@ function Ohsce_comclose(&$oibc,$mode=0){
 	fclose($oibc);
 	break;
 	}
+	return true;
 }
 function ohsce_comflush(&$oibc){
 	return fflush($oibc);

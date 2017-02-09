@@ -1,27 +1,27 @@
 <?php
 /*
-OHSCE_V0.1.23_B
-¸ß¿É¿¿ÐÔµÄPHPÍ¨ÐÅ¿ò¼Ü¡£
+OHSCE_V0.2.0_B
+é«˜å¯é æ€§çš„PHPé€šä¿¡æ¡†æž¶ã€‚
 HTTP://WWW.OHSCE.ORG
-@×÷Õß:ÁÖÓÑÕÜ 393562235@QQ.COM
-×÷Õß±£ÁôÈ«²¿È¨Àû£¬ÇëÒÀÕÕÊÚÈ¨Ð­ÒéÊ¹ÓÃ¡£
-¸ÃÎÄ¼þ½ûÖ¹¸ÄÃû!·ñÔò¿ÉÄÜ»áÎÞ·¨ÔËÐÐ£¡
+@ä½œè€…:æž—å‹å“² 393562235@QQ.COM
+ä½œè€…ä¿ç•™å…¨éƒ¨æƒåˆ©ï¼Œè¯·ä¾ç…§æŽˆæƒåè®®ä½¿ç”¨ã€‚
+è¯¥æ–‡ä»¶ç¦æ­¢æ”¹å!å¦åˆ™å¯èƒ½ä¼šæ— æ³•è¿è¡Œï¼
 */
-define('OHSCE_MYIP', '127.0.0.1');//±¾»úIPµØÖ·
-define('OHSCE_MYIP_SYSTEM', '127.0.0.1');//±¾»úIPµØÖ·£¨ÏµÍ³ÄÚ£©
-define('OHSCE_PHPDIR', 'D:\php54\php.exe');//ÄúµÄPHPËùÔÚÂ·¾¶
-define('OHSCE_OLMD_MADDRESS',"20");//OLMDÄÚ´æÆðÊ¼
-define('OHSCE_OLMD_MADDRESSBACKUPS',"10");//OLMDÄÚ´æÆðÊ¼£¨±¸£©
-define('OHSCE_OLMD_MADDRESSPORT',"7698");//OLMD¼àÌý¶Ë¿Ú
-define('OHSCE_OLMD_MADDRESSPORTY',"7699");//OLMD¼àÌý¶Ë¿Ú(¶ÔÍâ¶ÁÈ¡)
-define('OHSCE_OLMD_MADDRESSPASS',"ohsceolmdpassword"); //OLMDÐ´ÈëÃÜÔ¿£¬Èç¹ûÄã²»ÉÆÓÚÎ¬»¤·À»ðÇ½£¬ÄÇÃ´Äã±ØÐëÐÞ¸ÄËü
-define('OHSCE_OLMD_MADDRESSPASSY',"password");//ÕâÊÇOLMD¶ÔÍâ¶ÁÈ¡ÃÜÔ¿£¬Èç¹ûÄã²»ÉÆÓÚÎ¬»¤·À»ðÇ½£¬ÄÇÃ´Äã±ØÐëÐÞ¸ÄËü
-$OHSCE_PLdir=OHSCE_ROOTDIR.'\PcenterRun\\';//PCENTERÖ±ÆôÄ¿Â¼
-$OHSCE_pdefend=OHSCE_ROOTDIR.'\OHSceRun.php -r engine -m pdefend -p';
-$OHSCE_pdefend_vbs=OHSCE_ROOTDIR.'\pdefend.vbs';
-$OHSCE_pdefendC_vbs=OHSCE_ROOTDIR.'\pdefendC.vbs';
-$OHSCE_pdefend_recalltime=5;//µ±¶þ¼¶ÊØ»¤½ø³ÌËÀÍöÖØÐÂºô½Ð¼ä¸ô£¬²»ÒªÌ«Ð¡£¡
+define('OHSCE_MYIP', '127.0.0.1');//æœ¬æœºIPåœ°å€
+define('OHSCE_MYIP_SYSTEM', '127.0.0.1');//æœ¬æœºIPåœ°å€ï¼ˆç³»ç»Ÿå†…ï¼‰
+define('OHSCE_PHPDIR', 'php');//æ‚¨çš„PHPæ‰€åœ¨è·¯å¾„
+define('OHSCE_OLMD_MADDRESS',"20");//OLMDå†…å­˜èµ·å§‹
+define('OHSCE_OLMD_MADDRESSBACKUPS',"10");//OLMDå†…å­˜èµ·å§‹ï¼ˆå¤‡ï¼‰
+define('OHSCE_OLMD_MADDRESSPORT',"7698");//OLMDç›‘å¬ç«¯å£
+define('OHSCE_OLMD_MADDRESSPORTY',"7699");//OLMDç›‘å¬ç«¯å£(å¯¹å¤–è¯»å–)
+define('OHSCE_OLMD_MADDRESSPASS',"ohsceolmdpassword"); //OLMDå†™å…¥å¯†é’¥ï¼Œå¦‚æžœä½ ä¸å–„äºŽç»´æŠ¤é˜²ç«å¢™ï¼Œé‚£ä¹ˆä½ å¿…é¡»ä¿®æ”¹å®ƒ
+define('OHSCE_OLMD_MADDRESSPASSY',"password");//è¿™æ˜¯OLMDå¯¹å¤–è¯»å–å¯†é’¥ï¼Œå¦‚æžœä½ ä¸å–„äºŽç»´æŠ¤é˜²ç«å¢™ï¼Œé‚£ä¹ˆä½ å¿…é¡»ä¿®æ”¹å®ƒ
+$OHSCE_PLdir=OHSCE_ROOTDIR.'/PcenterRun/';//PCENTERç›´å¯ç›®å½•
+$OHSCE_pdefend=OHSCE_ROOTDIR.'/OHSceRun.php -r engine -m pdefend -p';
+$OHSCE_pdefend_vbs=OHSCE_ROOTDIR.'/pdefend.vbs';
+$OHSCE_pdefendC_vbs=OHSCE_ROOTDIR.'/pdefendC.vbs';
+$OHSCE_pdefend_recalltime=5;//å½“äºŒçº§å®ˆæŠ¤è¿›ç¨‹æ­»äº¡é‡æ–°å‘¼å«é—´éš”ï¼Œä¸è¦å¤ªå°ï¼
 //---------------WebApis
-$OHSCE_webapi="on";//on-¿ªÆô  off-¹Ø±Õ WEBAPI
-$OHSCE_webapi_safe="off";//on-¿ªÆôÑéÖ¤Token off-²»ÑéÖ¤Token 
-$OHSCE_webapi_token="webapitoken";//TokenÖÖ×Ó£¬±ØÐëÐÞ¸Ä¡£
+$OHSCE_webapi="on";//on-å¼€å¯  off-å…³é—­ WEBAPI
+$OHSCE_webapi_safe="off";//on-å¼€å¯éªŒè¯Token off-ä¸éªŒè¯Token 
+$OHSCE_webapi_token="webapitoken";//Tokenç§å­ï¼Œå¿…é¡»ä¿®æ”¹ã€‚

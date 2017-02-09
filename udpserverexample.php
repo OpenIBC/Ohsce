@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.1.23_B
+OHSCE_V0.2.0_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -17,5 +17,5 @@ function example(&$socket,$buf,$from,$port,$zv){  //收到数据时的回调函�
 	 Ohsce_socketsend($socket,$trya.'hi '.$buf,0,0,$from,$port);
 	return true;
 }
-Ohsce_eng_socket_server($ohsceserver,'udp',7626,'127.0.0.1','example');//创建一个TCP服务端资源 绑定127.0.0.1:7626 并传入回调函数
+Ohsce_eng_socket_server($ohsceserver,'udp',7628,'127.0.0.1','example');//创建一个TCP服务端资源 绑定127.0.0.1:7628 并传入回调函数
 @Ohsce_eng_socket_server_runudp($ohsceserver); //开始运行

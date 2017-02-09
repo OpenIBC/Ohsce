@@ -1,1 +1,1 @@
-php %cd%\tcpComClientExample.php
+php %cd%\tcpClientExample.php
