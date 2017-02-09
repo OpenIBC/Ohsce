@@ -1,6 +1,10 @@
 <?php
 /*
+<<<<<<< HEAD
 OHSCE_V0.2.0_B
+=======
+OHSCE_V0.1.27_B
+>>>>>>> origin/master
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
