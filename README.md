@@ -110,8 +110,8 @@ Not too much pursuit of high performance, fully balanced reliability and high pe
 <br />3.4.1CLOUD_API
 <br />3.4.2 CLOUD_MODBUS_DRIVE
 <BR />Ohsce_drive_cloud_modbus($comlink,"RTU","01",'01',"40001","0002");
-<br />完整演示:http://www.ohsce.com/index.php/article/27.html
-<br /><img src="https://static.oschina.net/uploads/space/2017/0120/113054_wi1T_1268611.jpg"></img>
+<br />MODBUS-RTU的一个相对完整的示例:http://www.ohsce.com/index.php/article/27.html
+<br /><img src="https://static.oschina.net/uploads/space/2017/0120/140801_0giw_1268611.gif"></img>
 <br />
 <br />不断完善中，感谢支持。
 #交流与捐助
