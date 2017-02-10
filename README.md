@@ -109,7 +109,7 @@ Not too much pursuit of high performance, fully balanced reliability and high pe
 <br />
 <br />3.4.1CLOUD_API
 <br />3.4.2 CLOUD_MODBUS_DRIVE
-<BR />Ohsce_drive_cloud_modbus(null,"RTU","01",'01',"40001","0002");
+<BR />Ohsce_drive_cloud_modbus($comlink,"RTU","01",'01',"40001","0002");
 <br />
 <br />不断完善中，感谢支持。
 #交流与捐助
