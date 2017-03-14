@@ -11,11 +11,11 @@ error_reporting(E_ALL);
 if(!defined('IN_OHSCE')){
 define('IN_OHSCE', TRUE);
 }
-if(file_exists('./config/oibc_sce_config.php')){
+if(file_exists(dirname(__FILE__).'/config/oibc_sce_config.php')){
 define('OHSCE_ROOTDIR',dirname(__FILE__));
-}elseif(file_exists('./Ohsce/config/oibc_sce_config.php')){
+}elseif(file_exists(dirname(__FILE__).'/Ohsce/config/oibc_sce_config.php')){
 define('OHSCE_ROOTDIR',dirname(__FILE__).'/Ohsce/');
-}elseif(file_exists('./OHSCE/config/oibc_sce_config.php')){
+}elseif(file_exists(dirname(__FILE__).'/OHSCE/config/oibc_sce_config.php')){
 define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
 }else{
 	exit('Can not find Ohsce or OHSCE!');

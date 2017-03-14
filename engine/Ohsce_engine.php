@@ -410,9 +410,9 @@ if(($oibc_pdefend_pkey=="")or($oibc_pdefend_pkey==null)){
 $ohsce_pdefend_ml=trim(base64_decode($oibc_pdefend_pkey));
 echo $ohsce_pdefend_ml;
 $ohsce_pdefend_descriptorspec = array(
-   0 => array("pipe", "r"),  // 标准输入，子进程从此管道中读取数据
-   1 => array("pipe", "w"),  // 标准输出，子进程向此管道中写入数据
-   //2 => array("file", "./log/pdefend_error-output.txt", "a") // 标准错误，写入到一个文件
+   0 => array("pipe", "r"),  
+   1 => array("pipe", "w"),  
+   //2 => array("file", "./log/pdefend_error-output.txt", "a")
 );
 
 $ohsce_pdefend_cwd = NULL;

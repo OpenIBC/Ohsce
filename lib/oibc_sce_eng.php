@@ -148,6 +148,18 @@ function Ohsce_eng_socket_server_close(&$res){
 	$res['connect']=false;
 	return $res;
 }
+function Ohsce_eng_socket_reConnect(&$res){
+	if($res['protocol']=="TCP"){
+	if(!Ohsce_socketconnect($res['socket'],$res['ip'],$res['port'])){
+		$res['msg']='OibcSceCanNotConnectTO'.$res['ip'].':'.$res['port'].'  _OibcSceV'.Ohsce_geterror($res['socket']).OIBC_VERSON;
+		return false;
+	}else{
+		return true;
+	}
+	}else{
+		return true;
+	}
+}
 function oibc_sce_socket_send(&$oibc_sce,$in,$len=null,$mode=null,$to=null,$port=null,$flags=0,$fast=null){
 	$ohsce_eng_socket_client_wait=$oibc_sce['space'];
 	$mnow=microtime();
@@ -474,12 +486,22 @@ function Ohsce_eng_serial_write(&$oibc,$data,$thex=false){
 		$res[1]='OpenIBCSCE_U MUST OPEN FIRST!'.OIBC_VERSON;
 		return $res;
 	}
+	if(substr($data,-4)=="/r/n"){
+		$data_mw="/r/n";
+		$data=substr($data,0,(strlen($data)-4));
+	}elseif(substr($data,-2)=="/n"){
+		$data_mw="/n";
+		$data=substr($data,0,(strlen($data)-2));
+	}
 	if($thex=="string"){
 		$thex=false;
 		$data=bts_str2bin($data);
 	}
 	if($thex){
 		$data=hex2bin($data);
+	}
+	if(isset($data_mw)){
+		$data=$data.$data_mw;
 	}
 	return Ohsce_comwrite($oibc['comr'],$data);
 }
@@ -519,7 +541,7 @@ function Ohsce_eng_serial_read(&$oibc,&$data,$len=null,$thex=false,$timeout=3){
 function Ohsce_eng_serial_comwr(&$oibc,$wbuf,$wlen=null,&$rbuf,$rlen=2,$mode=0){
 	Ohsce_eng_serial_write($oibc,$wbuf,$wlen);
 	usleep(3000);
-        Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
+    Ohsce_eng_serial_read($oibc,$rbuf,$rlen=2);
 	return $rbuf;
 }
 function Ohsce_eng_serial_npcomwr(&$oibc,$wdata,&$rdata,$thex=false){

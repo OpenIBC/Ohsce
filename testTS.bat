@@ -1,1 +1,1 @@
-php %cd%\tcpserverExample.php
+php %cd%/tcpserverExample.php

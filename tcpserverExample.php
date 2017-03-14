@@ -10,6 +10,7 @@ ini_set('memory_limit',"88M");//重置php可以使用的内存大小为64M
 set_time_limit(0);
 ob_implicit_flush(1);
 include('loadohsce.php');
+
 function example(&$socket,$buf,$len,&$zv){  //收到数据时的回调函数
 	echo $buf;
 	Ohsce_socketwrite($socket,'hi '.$buf);
