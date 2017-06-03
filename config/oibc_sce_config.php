@@ -16,6 +16,7 @@ define('OHSCE_OLMD_MADDRESSPORT',"7698");//OLMD监听端口
 define('OHSCE_OLMD_MADDRESSPORTY',"7699");//OLMD监听端口(对外读取)
 define('OHSCE_OLMD_MADDRESSPASS',"ohsceolmdpassword"); //OLMD写入密钥，如果你不善于维护防火墙，那么你必须修改它
 define('OHSCE_OLMD_MADDRESSPASSY',"password");//这是OLMD对外读取密钥，如果你不善于维护防火墙，那么你必须修改它
+//define('OHSCE_ROOTDIR',dirname(__FILE__));
 $OHSCE_PLdir=OHSCE_ROOTDIR.'/PcenterRun/';//PCENTER直启目录
 $OHSCE_pdefend=OHSCE_ROOTDIR.'/OHSceRun.php -r engine -m pdefend -p';
 $OHSCE_pdefend_vbs=OHSCE_ROOTDIR.'/pdefend.vbs';
