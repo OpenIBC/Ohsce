@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.2.0_B
+OHSCE_V0.2.0.2_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -12,11 +12,11 @@ if(!defined('IN_OHSCE')){
 define('IN_OHSCE', TRUE);
 }
 if(file_exists(dirname(__FILE__).'/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR',dirname(__FILE__));
+defined('OHSCE_ROOTDIR') or define('OHSCE_ROOTDIR',dirname(__FILE__));
 }elseif(file_exists(dirname(__FILE__).'/Ohsce/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR',dirname(__FILE__).'/Ohsce/');
+defined('OHSCE_ROOTDIR') or define('OHSCE_ROOTDIR',dirname(__FILE__).'/Ohsce/');
 }elseif(file_exists(dirname(__FILE__).'/OHSCE/config/oibc_sce_config.php')){
-define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
+defined('OHSCE_ROOTDIR') or define('OHSCE_ROOTDIR',dirname(__FILE__).'/OHSCE/');
 }else{
 	exit('Can not find Ohsce or OHSCE!');
 	sleep(30);

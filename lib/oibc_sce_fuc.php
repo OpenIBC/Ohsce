@@ -1194,3 +1194,65 @@ function ohsce_smClean(&$mkey){
 	ohsce_smClose($mkey);
 	return true;
 }
+function ohsce_jsonrpc_client_creat($host, $port, $version="2.0"){
+	$ohsce_jsonrpc_rq['host']=$host;
+	$ohsce_jsonrpc_rq['port']=$port;
+	$ohsce_jsonrpc_rq['version']=$version;
+	return $ohsce_jsonrpc_rq;
+}
+function ohsce_jsonrpc_format_response($response)
+{
+	$ohsce_jsonrpc_re=json_decode($response,true);
+	if($ohsce_jsonrpc_re==NULL){
+		$ohsce_jsonrpc_re=false;
+	}
+	return $ohsce_jsonrpc_re;
+}
+function ohsce_jsonrpc_request($rq, $method, $params=array(), $timeout=1,$jrid="A1")
+{
+	    $gidvname="ohsce_jsonrpc_gid_".$jrid;
+		global $$gidvname;
+		if(empty($$gidvname)){
+			$$gidvname=0;
+		}
+		$id=$$gidvname;
+		$data = array();
+		$data['jsonrpc'] = $rq['version'];
+		$data['id'] = $id+1;
+		$data['method'] = $method;
+		$data['params'] = $params;
+		
+		$ch = curl_init();
+		
+		curl_setopt($ch, CURLOPT_URL, $rq['host']);
+		curl_setopt($ch, CURLOPT_PORT, $rq['port']);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+		if($timeout!=false){
+		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); 
+		}
+		
+		$ret = curl_exec($ch);
+		
+		if($ret !== FALSE)
+		{
+			$formatted = ohsce_jsonrpc_format_response($ret);
+			
+			if(isset($formatted["error"]))
+			{
+				return array('ohsceres'=>false,'error'=>true,'message'=>$formatted["error"]["message"],'code'=>$formatted["error"]["code"]);
+			}
+			else
+			{
+				$formatted['ohsceres']=true;
+				$formatted['error']=false;
+				return $formatted;
+			}
+		}
+		else
+		{
+			return array('ohsceres'=>false,'error'=>false,'message'=>'Server did not respond!');
+		}
+}

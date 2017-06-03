@@ -1,6 +1,6 @@
 <?php
 /*
-OHSCE_V0.2.0_B
+OHSCE_V0.2.0.2_B
 高可靠性的PHP通信框架。
 HTTP://WWW.OHSCE.ORG
 @作者:林友哲 393562235@QQ.COM
@@ -493,9 +493,13 @@ function Ohsce_eng_serial_write(&$oibc,$data,$thex=false){
 		$data_mw="/n";
 		$data=substr($data,0,(strlen($data)-2));
 	}
-	if($thex=="string"){
+	if((strcmp($thex,"string")==0)or(strcmp($thex,"String")==0)or(strcmp($thex,"STRING")==0)or(strcmp($thex,"str")==0)or(strcmp($thex,"STR")==0)or(strcmp($thex,"Str")==0)){
 		$thex=false;
 		$data=bts_str2bin($data);
+	}
+	if((strcmp($thex,"Dec")==0)or(strcmp($thex,"dec")==0)or(strcmp($thex,"DEC")==0)){
+		$thex=true;
+		$data=dechex($data);
 	}
 	if($thex){
 		$data=hex2bin($data);

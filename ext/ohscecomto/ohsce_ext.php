@@ -24,7 +24,7 @@ function ohsce_ext_ohscecomto($com=null){
 	$exsms=OHSCE_ROOTDIR.'/ext/ohscecomto/ohscecomto_x86.exe -com '.$com;
 	}
 	break;
-	case "Linux":
+	case "linux":
 		$exsms="stty -F ".$com." min 0 time 10";
 	break;
 	case "OSX":
