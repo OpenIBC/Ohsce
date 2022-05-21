@@ -1,5 +1,8 @@
 # OHSCE高可靠性的PHP通信框架.
-<br />Hey!I'm come back!
+<br />由于我未收到任何被动的收入所以我决定放弃传统开源的计划了，域名也丢了。
+<br />但是我将面向公有区块链ETHEREUM进行开发，本项目若有后续开发将充分耦合区块链领域的价值！
+<br />我认为将主要精力投入在传统自动化、AI和智能化方面是个错误。
+<br />-------------At 21/05/2022
 <BR />官方网站:WWW.OHSCE.ORG WWW.OHSCE.COM 最新版本V0.2.0.2 2017-05-10
 <br />开发者QQ群：374756165（新2016-09） 捐助: http://www.ohsce.com/index.php/company/
 <br /><img src="http://www.ohsce.com/data/upload/201611/f_d4f69a0cecf5298f56449166d0fe43c3.png"></img>
@@ -120,4 +123,4 @@ Not too much pursuit of high performance, fully balanced reliability and high pe
 <br />关于我们&合作:
 <br />http://www.ohsce.com/index.php/company/
 <br />捐助：
-<br /><img src="http://www.ohsce.com/data/upload/201609/f_435f9ddd005975f43d6cd2559a63e138.jpg" height="150px" width="150px"><br /><img src="http://www.ohsce.com/data/upload/201609/f_5c89175114fe61466ad853795ee2c9cb.png" height="150px" width="150px"></img><br />ETH:0x42bCE0188534b27A156D6c80163d5248acb6a8EF
+<br /><img src="http://www.ohsce.com/data/upload/201609/f_435f9ddd005975f43d6cd2559a63e138.jpg" height="150px" width="150px"><br /><img src="http://www.ohsce.com/data/upload/201609/f_5c89175114fe61466ad853795ee2c9cb.png" height="150px" width="150px"></img><br />
